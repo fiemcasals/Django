@@ -1,6 +1,6 @@
 # Historias de Usuario -- django
 
-_Generado automaticamente el 2026-09-24T17:16:08.610Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-24T17:18:18.614Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ## HU-01: Arquitectura base modular y entorno Dockerizado con documentación didáctica
 
@@ -50,3 +50,19 @@ Como usuario o alumno que utiliza la aplicación, quiero contar con un flujo com
 ### Detalle Tecnico y Reglas de Negocio
 
 Uso de django.contrib.auth.views y sus formularios estándar. Configuración didáctica de EMAIL_BACKEND en settings.py mediante variables de entorno.
+
+## HU-04: CRUD de información didáctico con indexación en base de datos PostgreSQL
+
+Como alumno o desarrollador que utiliza la plantilla, quiero contar con una aplicación modelo completa (ejemplo: gestión de ítems/documentos) con vistas, modelos, formularios y métodos explícitos para obtener índices y consultar datos, para aprender cómo interactúa el ORM de Django con PostgreSQL y dejar listos los métodos de consulta que luego utilizará el módulo de Inteligencia Artificial.
+
+### Criterios de Aceptacion
+
+1. Debe existir una app modelo (apps/datos/ o apps/recursos/) con un modelo de datos representativo que incluya campos de texto, fechas, categorías y campos indexados en PostgreSQL (db_index=True o Meta.indexes).
+2. El modelo debe incluir un método específico de clase o manager (por ejemplo, obtener_indice() o listar_resumen()) que devuelva el catálogo/índice de los registros disponibles en formato ligero (IDs, títulos, metadatos clave).
+3. El modelo o servicio debe proveer métodos de consulta parametrizados (búsqueda por texto, filtrado por fecha o categoría) para ser invocados programáticamente.
+4. Debe incluir interfaz web con vistas basadas en funciones o clases para listar, ver detalle, crear y editar registros, con validaciones en forms.py.
+5. Cada archivo (models.py, views.py, forms.py, urls.py) debe estar comentado detallando el funcionamiento del ORM, migraciones y renderizado de templates.
+
+### Detalle Tecnico y Reglas de Negocio
+
+PostgreSQL como motor relacional. Métodos utilitarios en el modelo o en un archivo services.py para desacoplar lógica de consulta.
