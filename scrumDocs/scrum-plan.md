@@ -1,6 +1,6 @@
 # Plan de Requerimientos — django
 
-_Generado automáticamente el 2026-09-24T18:00:47.641Z — no editar a mano, se sobreescribe en cada publicación._
+_Generado automáticamente el 2026-09-24T18:13:27.511Z — no editar a mano, se sobreescribe en cada publicación._
 
 Orden sugerido de desarrollo (respeta dependencias entre Requerimientos). Cada fila indica de qué Requerimientos depende, si tiene.
 
