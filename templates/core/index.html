@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% comment %}
+==============================================================================
+templates/core/index.html - Página de Inicio de la App Core
+==============================================================================
+Explicación para alumnos:
+1. '{% extends "base.html" %}': Le indica a Django que este archivo hereda toda la
+   estructura de 'base.html'.
+2. '{% block content %}...{% endblock %}': Todo lo que esté adentro de esta etiqueta
+   se insertará automáticamente en el lugar donde 'base.html' declaró ese bloque.
+==============================================================================
+{% endcomment %}
+
+{% block title %}Inicio - {{ APP_NAME }}{% endblock %}
+
+{% block content %}
+<div class="container hero-section">
+    <div class="hero-card">
+        <span class="badge-tag">Plantilla Base Modular</span>
+        <h1 class="hero-title">Arquitectura Django para Aprendizaje</h1>
+        <p class="hero-lead">
+            Bienvenido a la plantilla base de Django. Este proyecto está diseñado para enseñarte
+            el funcionamiento interno de Django paso a paso, con código comentado, separación
+            modular en aplicaciones y preparado para ser dockerizado con PostgreSQL.
+        </p>
+        <div class="hero-actions">
+            <a href="#arquitectura" class="btn btn-primary">Ver Estructura Modular</a>
+            <a href="{% url 'core:salud' %}" class="btn btn-secondary" target="_blank">Health Check API</a>
+        </div>
+    </div>
+</div>
+
+<div class="container section-container" id="arquitectura">
+    <h2 class="section-title">Estructura del Proyecto y Módulos</h2>
+    <p class="section-subtitle">Cómo se organiza el código entre la configuración central y las aplicaciones.</p>
+
+    <div class="grid-cards">
+        <!-- Tarjeta 1: Configuración Central -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-icon">&#9881;</span>
+                <h3>Configuración Central (<code>config/</code>)</h3>
+            </div>
+            <div class="card-body">
+                <p>Contiene los ajustes globales del proyecto:</p>
+                <ul class="feature-list">
+                    <li><strong><code>settings.py</code>:</strong> Configuración central comentada línea por línea.</li>
+                    <li><strong><code>urls.py</code>:</strong> Enrutador principal con <code>include()</code>.</li>
+                    <li><strong><code>wsgi.py</code> / <code>asgi.py</code>:</strong> Puntos de enlace con servidores web.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tarjeta 2: Aplicaciones Modulares -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-icon">&#128230;</span>
+                <h3>Aplicaciones Modulares (<code>apps/</code>)</h3>
+            </div>
+            <div class="card-body">
+                <p>Cada funcionalidad vive en su propia carpeta:</p>
+                <ul class="feature-list">
+                    <li><strong><code>models.py</code>:</strong> Tablas en la base de datos (ORM).</li>
+                    <li><strong><code>views.py</code>:</strong> Lógica de respuesta a peticiones HTTP.</li>
+                    <li><strong><code>forms.py</code>:</strong> Formularios y validaciones de usuario.</li>
+                    <li><strong><code>urls.py</code>:</strong> Rutas locales desacopladas.</li>
+                    <li><strong><code>admin.py</code>:</strong> Registro visual en el panel de control.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tarjeta 3: Seguridad y Entorno -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-icon">&#128274;</span>
+                <h3>Seguridad y Variables (<code>.env</code>)</h3>
+            </div>
+            <div class="card-body">
+                <p>Manejo profesional de credenciales:</p>
+                <ul class="feature-list">
+                    <li><strong><code>.env.example</code>:</strong> Plantilla de variables documentadas.</li>
+                    <li><strong><code>.gitignore</code>:</strong> Protege tus contraseñas y entornos virtuales.</li>
+                    <li><strong><code>django-environ</code>:</strong> Carga segura de configuraciones.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container section-container">
+    <h2 class="section-title">Hoja de Ruta del Proyecto (Backlog)</h2>
+    <div class="timeline-list">
+        {% for modulo in modulos_disponibles %}
+        <div class="timeline-item">
+            <div class="timeline-status">
+                <span class="status-dot {% if modulo.estado == 'Completada' %}status-done{% else %}status-pending{% endif %}"></span>
+            </div>
+            <div class="timeline-info">
+                <h4>{{ modulo.nombre }} <span class="badge {% if modulo.estado == 'Completada' %}badge-success{% else %}badge-warning{% endif %}">{{ modulo.estado }}</span></h4>
+                <p class="text-muted">{{ modulo.desc }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Mensajes activos desde la Base de Datos -->
+{% if mensajes %}
+<div class="container section-container">
+    <h2 class="section-title">Mensajes Registrados en la Base de Datos</h2>
+    <div class="grid-cards">
+        {% for m in mensajes %}
+        <div class="card">
+            <div class="card-body">
+                <h3>{{ m.titulo }}</h3>
+                <p>{{ m.contenido }}</p>
+                <small class="text-muted">Publicado el {{ m.creado_el|date:"d/m/Y H:i" }}</small>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}
