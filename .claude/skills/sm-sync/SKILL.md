@@ -311,6 +311,35 @@ Scrum Master.
    que el paso 2). Si no hay ninguna Historia razonable, **no la inventes** -- avisar que
    hace falta que el Product Owner (o el Project Manager) cargue esa Historia primero, y
    no crear el Requerimiento suelto.
+1.2. **Escribir las condiciones de aprobación. Sin esto no se crea el
+   Requerimiento.** Son la respuesta a: *¿qué tiene que ser verdad para que esto
+   esté terminado?* Van en el campo `acceptanceCriteria`, una por línea, en
+   presente y **verificables mirando el sistema**:
+
+   ```
+   - El alta rechaza un email ya registrado y lo dice en pantalla
+   - La contraseña se guarda hasheada, nunca en texto plano
+   - Un alta exitosa deja al usuario logueado
+   ```
+
+   No confundirlas con los criterios de la Historia: **ésas son del alcance
+   funcional entero y éstas son de ESTA tarjeta**. Si copiás los de la Historia
+   tal cual, el developer vuelve a quedar adivinando cuáles le tocan, que es el
+   problema que esto viene a resolver.
+
+   Tres que NO sirven, y cómo se arreglan:
+
+   | No sirve | Por qué | Así sí |
+   |---|---|---|
+   | "Que funcione el login" | No dice qué es funcionar | "Con credenciales válidas entra al panel; con inválidas muestra el error y no entra" |
+   | "Código prolijo y documentado" | No se verifica mirando el sistema | Eso es la definición de terminado del equipo, no una condición de esta tarjeta |
+   | "Rápido" | No tiene número | "La búsqueda responde en menos de 2 segundos con 10.000 registros" |
+
+   **Si no las podés escribir, el Requerimiento no está listo para crearse.** Casi
+   siempre significa una de dos cosas: falta entender qué se pidió —y eso se
+   pregunta, no se adivina—, o el Requerimiento es demasiado grande y hay que
+   partirlo. Decílo así, y no lo crees hasta resolverlo.
+
 1.5. **Resolver de qué depende, antes de crearlo.** Mirá los Requerimientos que ya
    tiene esa Historia (y los de las Historias anteriores) y preguntate qué tiene que estar
    andando para que éste se pueda **probar**. No para que se pueda escribir: para que se
@@ -323,14 +352,14 @@ Scrum Master.
    no espera a nada". Es una afirmación que tenés que poder sostener, no un campo vacío.
 
 2. **Confirmarle al usuario, antes de llamar a la API**: nombre propuesto, tipo
-   (`funcional`/`no_funcional`), bajo qué Historia va a quedar y **de qué Requerimientos
-   depende** -- a diferencia de reasignar o reagendar (reversibles con otra corrida), crear
+   (`funcional`/`no_funcional`), bajo qué Historia va a quedar, **sus condiciones de
+   aprobación** y **de qué Requerimientos depende** -- a diferencia de reasignar o reagendar (reversibles con otra corrida), crear
    un Requerimiento de más ensucia el backlog y sólo el Project Manager puede borrarlo
    después.
 3. Con la confirmación:
    ```bash
    cat > /tmp/cuerpo.json <<'JSON'
-   {"name":"...","description":"...","type":"funcional","dependencies":["REQ-1700000000000"]}
+   {"name":"...","description":"...","type":"funcional","acceptanceCriteria":"- El alta rechaza un email ya registrado\n- La contraseña se guarda hasheada","dependencies":["REQ-1700000000000"]}
    JSON
    curl -s -X POST "$SCRUM_API_URL/api/v1/user-stories/$USER_STORY_ID/requirements" \
      -H "Authorization: Bearer $SCRUM_API_KEY" -H "Content-Type: application/json" \
@@ -340,7 +369,13 @@ Scrum Master.
      nace con el tag de quién lo armó -- no hace falta "visarlo" aparte, eso ya no existe.
    - `403` → no debería pasar si el paso 1.5 confirmó el rol, pero si pasa, no
      reintentar: revisar que la key no haya sido rotada a otro rol entre medio.
-4. Resumen final: qué Requerimiento se creó, con qué código y bajo qué Historia.
+4. Resumen final: qué Requerimiento se creó, con qué código, bajo qué Historia, con qué
+   condiciones de aprobación y de qué depende.
+
+5. **Y los que ya existen sin condiciones.** Al terminar, mirá la lista del paso 2:
+   cualquier Requerimiento con `acceptanceCriteria` vacío es uno que nadie va a poder dar
+   por terminado sin discutir. Nombralos y ofrecé escribirlas — de a uno, mostrando la
+   propuesta y esperando el OK, como todo lo demás.
 
 ### `operacional <descripción>` — dar de alta trabajo que no nace de una Historia
 
