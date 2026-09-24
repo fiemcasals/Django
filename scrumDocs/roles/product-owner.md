@@ -1,6 +1,6 @@
 # Product Owner — qué podés hacer en este proyecto
 
-_Generado automáticamente el 2026-09-24T16:46:13.638Z -- no editar a mano, se sobreescribe en cada publicación._
+_Generado automáticamente el 2026-09-24T19:11:21.725Z -- no editar a mano, se sobreescribe en cada publicación._
 
 Este es el documento de **tu** rol. El procedimiento paso a paso está en
 `.claude/skills/po-sync/SKILL.md`.
