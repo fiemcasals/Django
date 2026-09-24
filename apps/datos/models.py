@@ -18,10 +18,14 @@ from django.db import models
 from django.db.models import Q
 
 
-class ItemManager(models.Manager):
+class ItemQuerySet(models.QuerySet):
     """
-    Manager personalizado para operaciones de consulta y optimización de tokens.
+    QuerySet personalizado para operaciones encadenables de consulta y optimización.
     """
+
+    def disponibles(self):
+        """Filtra únicamente ítems activos/disponibles."""
+        return self.filter(disponible=True)
 
     def obtener_catalogo_indice(self):
         """
@@ -34,12 +38,21 @@ class ItemManager(models.Manager):
     def buscar_por_texto(self, query):
         """Búsqueda parametrizada que filtra por título o descripción ignorando mayúsculas."""
         if not query:
-            return self.none()
+            return self
         return self.filter(Q(titulo__icontains=query) | Q(descripcion__icontains=query))
 
     def filtrar_por_categoria(self, categoria):
         """Filtra registros por categoría específica de forma optimizada por índice."""
+        if not categoria:
+            return self
         return self.filter(categoria__iexact=categoria)
+
+
+class ItemManager(models.Manager.from_queryset(ItemQuerySet)):
+    """
+    Manager que hereda los métodos del QuerySet para permitir llamadas directas Item.objects...
+    """
+    pass
 
 
 class Item(models.Model):
