@@ -1,6 +1,6 @@
 # Project Manager — qué podés hacer en este proyecto
 
-_Generado automáticamente el 2026-09-24T16:46:10.961Z -- no editar a mano, se sobreescribe en cada publicación._
+_Generado automáticamente el 2026-09-24T19:11:19.187Z -- no editar a mano, se sobreescribe en cada publicación._
 
 Este es el documento de **tu** rol. El procedimiento paso a paso está en
 `.claude/skills/pm-sync/SKILL.md`.
@@ -39,8 +39,9 @@ entera del estado del equipo por el tablero y no por su propia tarea.
 ## El alcance se carga de a una pieza, y ordenado
 
 Cada Historia se valida antes de cargar la siguiente, y ninguna se carga sin criterios de
-aceptación. Cada Requerimiento nuevo declara de qué depende en el momento de crearlo: el
-orden es parte del desglose, no un ajuste posterior.
+aceptación. Cada Requerimiento nuevo se crea con sus **condiciones de aprobación**
+(`acceptanceCriteria`, propias de esa tarjeta) y declarando de qué depende: el orden y la
+definición de terminado son parte del desglose, no un ajuste posterior.
 
 Una Historia con un solo Requerimiento que hace todo no está fragmentada. Si no se puede
 probar por partes, hay que cortarla antes de que alguien la tome.
@@ -49,7 +50,7 @@ probar por partes, hay que cortarla antes de que alguien la tome.
 
 **Campos que podés escribir** con `PATCH /api/v1/requirements/[id]`:
 
-`name` · `description` · `type` · `status` · `assignee` · `estimated` · `real` · `observations` · `dependencies` · `position` · `start` · `end` · `rescheduleFromEstimate` · `moduleId` · `progress` · `aiGenerated` · `deliveryId` · `userStoryId` · `integrantes` · `mostrarAlSocio` · `approvalStatus`
+`name` · `description` · `type` · `acceptanceCriteria` · `status` · `assignee` · `estimated` · `real` · `observations` · `dependencies` · `position` · `start` · `end` · `rescheduleFromEstimate` · `moduleId` · `progress` · `aiGenerated` · `deliveryId` · `userStoryId` · `integrantes` · `mostrarAlSocio` · `approvalStatus`
 
 **Estados que podés fijar a mano**: `to_do` · `doing` · `pr_open`.
 
