@@ -1,6 +1,6 @@
 # Grafo de Dependencias -- django
 
-_Generado automaticamente el 2026-09-24T17:35:35.563Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-24T17:35:47.970Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ```mermaid
 graph TD
@@ -8,4 +8,5 @@ graph TD
     REQ_1790271231287["RF-01: Configuración central y estructura modular de aplicaciones Django"]
     REQ_1790271332189["RNF-01: Contenerización del entorno con Docker, docker-compose y PostgreSQL"]
   end
+  REQ_1790271231287 --> REQ_1790271332189
 ```
