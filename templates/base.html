@@ -47,7 +47,7 @@
                 
                 <!-- Sección didáctica: se muestra solo si ENABLE_STUDENT_MANUAL es True -->
                 {% if ENABLE_STUDENT_MANUAL %}
-                    <a href="#manual" class="nav-link nav-badge">Manual Alumno</a>
+                    <a href="{% url 'manual:index' %}" class="nav-link nav-badge">Manual Alumno</a>
                 {% endif %}
                 
                 <!-- Sección de autenticación (se completará dinámicamente en HU-03) -->

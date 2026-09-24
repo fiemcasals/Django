@@ -23,6 +23,9 @@ urlpatterns = [
     # Panel de administración de Django (http://localhost:8000/admin/)
     path('admin/', admin.site.urls),
 
+    # Módulo interactivo de Guía/Manual del Alumno (/manual/)
+    path('manual/', include('apps.manual.urls', namespace='manual')),
+
     # Incluimos las rutas de la app principal 'core' en la raíz (/)
     path('', include('apps.core.urls', namespace='core')),
 ]
