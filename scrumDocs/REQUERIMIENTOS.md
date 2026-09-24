@@ -1,6 +1,6 @@
 # Requerimientos -- django
 
-_Generado automaticamente el 2026-09-24T17:49:17.099Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-24T17:50:57.229Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ## HU-01: Arquitectura base modular y entorno Dockerizado con documentación didáctica
 
@@ -43,6 +43,16 @@ _Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scr
 ### RF-02: Circuito de restablecimiento y cambio de contraseña con emisor de consola (Funcional)
 
 Implementar el circuito completo de restablecimiento de contraseña (PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView) y cambio de contraseña activa (PasswordChangeView). Configurar EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'. Entregables: templates/registration/ (password_reset_form.html, password_reset_done.html, password_reset_confirm.html, password_reset_complete.html, password_change_form.html, password_change_done.html), apps/usuarios/tests/test_password_reset.py. Suite de tests obligatoria: genera correo con uidb64 y token, rechaza token inválido, confirma reseteo exitoso y permite cambio autenticado. Aprobación: python manage.py test apps.usuarios.tests.test_password_reset OK (4 tests pasados).
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
+## HU-04: CRUD de información didáctico con indexación en base de datos PostgreSQL
+
+### RF-01: Modelos de datos con indexación y métodos de extracción de catálogo/índice (Funcional)
+
+Crear la aplicación apps/datos/ con un modelo representativo (Item/Recurso) que incluya campos de texto, fecha, categoría y claves indexadas en PostgreSQL (db_index=True, Meta.indexes). Implementar en el modelo o manager el método obtener_catalogo_indice() que extraiga únicamente los metadatos livianos (ID, título, categoría) para optimización de tokens, y los métodos de búsqueda parametrizados. Entregables: apps/datos/ (apps.py, models.py, services.py), apps/datos/tests/test_models.py. Suite de tests obligatoria: crear registro persiste, obtener_catalogo_indice liviano, buscar por texto y filtrar por categoría. Aprobación: python manage.py test apps.datos.tests.test_models OK (4 tests pasados).
 
 **Condiciones de aprobación**
 
