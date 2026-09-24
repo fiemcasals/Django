@@ -68,16 +68,25 @@ DJANGO_APPS = [
 ]
 
 LOCAL_APPS = [
-    'apps.core.apps.CoreConfig',     # App base de bienvenida y utilidades globales
+    'apps.core.apps.CoreConfig',         # App base de bienvenida y utilidades globales
+    'apps.manual.apps.ManualConfig',     # App didáctica del Manual del Alumno
+    'apps.usuarios.apps.UsuariosConfig', # App de autenticación y gestión de usuarios
 ]
 
-# Switch didáctico: Si la app de manual está activa, la registramos
+# Switch didáctico: Si la app de manual está activa, la exponemos
 ENABLE_STUDENT_MANUAL = env('ENABLE_STUDENT_MANUAL', default=True)
-if ENABLE_STUDENT_MANUAL:
-    # Podrá ser incorporada en apps/manual/ en HU-02
-    pass
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
+
+# ------------------------------------------------------------------------------
+# REDIRECCIONES Y AUTENTICACIÓN
+# ------------------------------------------------------------------------------
+# Dónde enviar al usuario cuando intenta ingresar a una ruta protegida con @login_required
+LOGIN_URL = 'usuarios:login'
+# Dónde redirigir tras un inicio de sesión exitoso
+LOGIN_REDIRECT_URL = 'core:home'
+# Dónde redirigir tras cerrar sesión
+LOGOUT_REDIRECT_URL = 'core:home'
 
 # ------------------------------------------------------------------------------
 # 4. MIDDLEWARE (Capa Intermedia de Procesamiento HTTP)
@@ -114,6 +123,9 @@ INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
 # por lo tanto DEBE colocarse obligatoriamente DESPUÉS de 'SessionMiddleware'.
 # ------------------------------------------------------------------------------
 MIDDLEWARE = [
+    # 0. CORS Middleware didáctico: Permite peticiones cruzadas para verificación en vivo de Scrum Master AI
+    'apps.core.middleware.DidacticCorsMiddleware',
+
     # 1. Seguridad básica: Agrega encabezados HTTP de protección (X-Content-Type-Options, etc.)
     'django.middleware.security.SecurityMiddleware',
 
