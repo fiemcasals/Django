@@ -1,6 +1,6 @@
 # Plan de Requerimientos — django
 
-_Generado automáticamente el 2026-09-24T19:53:05.455Z — no editar a mano, se sobreescribe en cada publicación._
+_Generado automáticamente el 2026-09-24T19:53:23.246Z — no editar a mano, se sobreescribe en cada publicación._
 
 Orden sugerido de desarrollo (respeta dependencias entre Requerimientos). Cada fila indica de qué Requerimientos depende, si tiene.
 
@@ -14,7 +14,7 @@ Orden sugerido de desarrollo (respeta dependencias entre Requerimientos). Cada f
 | 6 | RF-02 | Circuito de restablecimiento y cambio de contraseña con emisor de consola | HU-03 | — | — | Hecho | dev-django | RF-01 | — |
 | 7 | RF-02 | Interfaz Web CRUD para gestión de datos con validaciones | HU-04 | — | — | Hecho | dev-django | RF-01 | — |
 | 8 | RF-01 | Servicio de IA con Anthropic SDK, Tool Calling en dos pasos y optimización de tokens | HU-05 | — | — | Hecho | dev-django | RF-01 | — |
-| 9 | RF-02 | Interfaz Web y Chat Didáctico para consultas con visualización del flujo de IA | HU-05 | — | — | Hacer | dev-django | RF-01 | — |
+| 9 | RF-02 | Interfaz Web y Chat Didáctico para consultas con visualización del flujo de IA | HU-05 | — | — | Haciendo | dev-django | RF-01 | — |
 
 ## Detalle
 
