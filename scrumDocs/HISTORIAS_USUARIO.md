@@ -1,6 +1,6 @@
 # Historias de Usuario -- django
 
-_Generado automaticamente el 2026-09-24T17:40:51.691Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-24T17:41:11.490Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ## HU-01: Arquitectura base modular y entorno Dockerizado con documentación didáctica
 
