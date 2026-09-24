@@ -1,6 +1,6 @@
 # Requerimientos -- django
 
-_Generado automaticamente el 2026-09-24T17:54:48.133Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-24T17:55:39.259Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ## HU-01: Arquitectura base modular y entorno Dockerizado con documentación didáctica
 
@@ -71,6 +71,14 @@ _Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scr
 ### RF-01: Servicio de IA con Anthropic SDK, Tool Calling en dos pasos y optimización de tokens (Funcional)
 
 Implementar en apps/ia/services.py la integración con Claude (anthropic SDK) leyendo ANTHROPIC_API_KEY desde .env. Implementar flujo en 2 pasos: Fase 1 para selección de tool de consulta liviano y Fase 2 para ejecución local en PostgreSQL y reenvío de datos a Claude para síntesis final. Manejar errores de conexión y cuotas. Entregables: apps/ia/ (apps.py, services.py), apps/ia/tests/test_ai_service.py. Suite de tests obligatoria (con mocks): esquema tools mínimo, selección de herramienta Fase 1, síntesis Fase 2 y captura de errores sin error 500. Aprobación: python manage.py test apps.ia.tests.test_ai_service OK (4 tests pasados).
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
+### RF-02: Interfaz Web y Chat Didáctico para consultas con visualización del flujo de IA (Funcional)
+
+Crear vistas, formularios y plantillas para interfaz de consultas asistidas por IA (/ia/consultas/). Permitir enviar preguntas en lenguaje natural y renderizar interactivamente las 2 etapas: 1. Tool seleccionado; 2. Respuesta final de Claude con datos de PostgreSQL. Entregables: apps/ia/ (forms.py, views.py, urls.py), templates/ia/ (chat.html, resultado_parcial.html), apps/ia/tests/test_views.py. Suite de tests obligatoria (con mocks): requiere login, renderiza 200, envío exitoso muestra ambas etapas y manejo de error visual ante falla de API. Aprobación: python manage.py test apps.ia.tests.test_views OK (4 tests pasados).
 
 **Condiciones de aprobación**
 
