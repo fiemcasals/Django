@@ -112,6 +112,9 @@ INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
 # por lo tanto DEBE colocarse obligatoriamente DESPUÉS de 'SessionMiddleware'.
 # ------------------------------------------------------------------------------
 MIDDLEWARE = [
+    # 0. CORS Middleware didáctico: Habilita peticiones cruzadas para verificación en vivo de Scrum Master AI
+    'apps.core.middleware.DidacticCorsMiddleware',
+
     # 1. Seguridad básica: Agrega encabezados HTTP de protección (X-Content-Type-Options, etc.)
     'django.middleware.security.SecurityMiddleware',
 
