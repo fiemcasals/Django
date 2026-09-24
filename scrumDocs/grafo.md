@@ -1,6 +1,6 @@
 # Grafo de Dependencias -- django
 
-_Generado automaticamente el 2026-09-24T17:54:49.396Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-24T17:55:40.446Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ```mermaid
 graph TD
@@ -21,6 +21,7 @@ graph TD
   end
   subgraph US_1790270414974["HU-05: Consulta inteligente a base de datos asistida por IA (Anthropic API con optimización estricta de tokens)"]
     REQ_1790272467589["RF-01: Servicio de IA con Anthropic SDK, Tool Calling en dos pasos y optimización de tokens"]
+    REQ_1790272536899["RF-02: Interfaz Web y Chat Didáctico para consultas con visualización del flujo de IA"]
   end
   REQ_1790271231287 --> REQ_1790271332189
   REQ_1790271231287 --> REQ_1790271443931
