@@ -1,6 +1,6 @@
 # Historias de Usuario -- django
 
-_Generado automaticamente el 2026-09-24T17:18:18.614Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-24T17:20:16.607Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ## HU-01: Arquitectura base modular y entorno Dockerizado con documentación didáctica
 
@@ -66,3 +66,20 @@ Como alumno o desarrollador que utiliza la plantilla, quiero contar con una apli
 ### Detalle Tecnico y Reglas de Negocio
 
 PostgreSQL como motor relacional. Métodos utilitarios en el modelo o en un archivo services.py para desacoplar lógica de consulta.
+
+## HU-05: Consulta inteligente a base de datos asistida por IA (Anthropic API con optimización estricta de tokens)
+
+Como alumno o usuario de la aplicación, quiero realizar consultas en lenguaje natural que la app resuelve comunicándose con Claude (Anthropic API) en dos fases optimizadas, para obtener respuestas precisas basadas en los datos de PostgreSQL minimizando al máximo el consumo de tokens.
+
+### Criterios de Aceptacion
+
+1. La integración debe utilizar la API oficial de Anthropic (anthropic SDK), leyendo la API key desde variables de entorno (ANTHROPIC_API_KEY).
+2. Fase 1 (Resolución de consulta): La aplicación debe enviar a Claude únicamente la pregunta del usuario y la definición mínima del índice/esquema de herramientas (tool definitions livianas) para que el modelo decida qué método de consulta ejecutar con qué parámetros, sin enviar datos pesados ni la base entera.
+3. Fase 2 (Ejecución y Síntesis): El backend debe ejecutar localmente el método de consulta seleccionado contra PostgreSQL, extraer únicamente los registros resultantes y reenviárselos al modelo en un segundo turno para que genere la respuesta final contextualizada.
+4. Debe incluir interfaz web (formulario de consulta / chat didáctico) que muestre visualmente las dos etapas del proceso (1. Método/Tool invocado, 2. Resultado devuelto).
+5. Debe manejar errores de conexión o cuota excedida de la API key mostrando mensajes claros y amigables.
+6. El código del servicio de IA (ai_service.py o similar) debe estar documentado con explicaciones pedagógicas sobre cómo funciona el Tool Calling y las técnicas aplicadas para ahorro de tokens.
+
+### Detalle Tecnico y Reglas de Negocio
+
+Modelo claude-3-haiku / claude-3-5-haiku para máxima eficiencia de costo y tokens. Esquema de herramientas JSON Schema minimalista.
