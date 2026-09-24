@@ -80,18 +80,42 @@ if ENABLE_STUDENT_MANUAL:
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
 
 # ------------------------------------------------------------------------------
-# 4. MIDDLEWARE (Filtros de Peticiones y Respuestas)
+# 4. MIDDLEWARE (Capa Intermedia de Procesamiento HTTP)
 # ------------------------------------------------------------------------------
-# Los middlewares son capas intermedias que procesan cada solicitud HTTP antes
-# de llegar a las vistas y antes de enviar la respuesta al navegador.
+# Explicación para alumnos:
+# Los 'Middlewares' son una serie de filtros en cadena (patrón "Cebolla" o Pipeline)
+# que se ejecutan en cada petición antes de llegar a la vista, y en cada respuesta
+# antes de enviarse al navegador del usuario.
+#
+# El orden en esta lista es crucial (se ejecutan de arriba hacia abajo en la petición,
+# y de abajo hacia arriba en la respuesta):
 # ------------------------------------------------------------------------------
 MIDDLEWARE = [
+    # 1. Seguridad básica: Agrega encabezados HTTP de protección (XSS, HSTS, SSL).
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',  # Gestiona sesiones entre peticiones
+
+    # 2. Manejo de Sesiones: Lee la cookie de sesión del navegador y crea el objeto
+    #    'request.session', permitiendo recordar datos del usuario entre páginas.
+    'django.contrib.sessions.middleware.SessionMiddleware',
+
+    # 3. Utilidades comunes: Normaliza URLs (agrega la barra final '/' si falta)
+    #    y maneja el encabezado User-Agent.
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',            # Protección contra ataques CSRF
-    'django.contrib.auth.middleware.AuthenticationMiddleware', # Asocia request.user al usuario actual
-    'django.contrib.messages.middleware.MessageMiddleware',  # Habilita el sistema de mensajes
+
+    # 4. Protección CSRF (Cross-Site Request Forgery): Evita que sitios externos envíen
+    #    formularios maliciosos a nombre de un usuario logueado. Requiere {% csrf_token %} en HTML.
+    'django.middleware.csrf.CsrfViewMiddleware',
+
+    # 5. Autenticación: Toma el ID de la sesión y asocia el usuario actual a 'request.user'.
+    #    (Requiere que SessionMiddleware esté antes).
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+
+    # 6. Mensajes Flash: Habilita el envío de notificaciones temporales ('messages.success', etc.)
+    #    que se guardan en la sesión y se muestran una sola vez en el HTML.
+    'django.contrib.messages.middleware.MessageMiddleware',
+
+    # 7. Protección contra Clickjacking: Evita que tu sitio web sea incrustado dentro
+    #    de un <iframe> invisible en otra página para engañar al usuario.
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -190,7 +214,20 @@ LOGOUT_REDIRECT_URL = 'login'
 # En desarrollo local usamos console.EmailBackend para imprimir los correos en la terminal
 EMAIL_BACKEND = env('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
 
-# Clave primaria por defecto para modelos
+# ------------------------------------------------------------------------------
+# 12. TIPO DE CLAVE PRIMARIA (PRIMARY KEY) POR DEFECTO PARA MODELOS
+# ------------------------------------------------------------------------------
+# Explicación para alumnos:
+# Cuando creas una clase en models.py sin especificar un campo 'id' manual,
+# Django crea automáticamente una clave primaria autoincremental: 'id = models.AutoField(...)'.
+#
+# 'BigAutoField' es un entero de 64 bits (en vez de 32 bits estándar).
+# ¿Por qué se usa?
+# - AutoField (32 bits): Permite hasta ~2.147 millones de registros (2^31 - 1).
+# - BigAutoField (64 bits): Permite hasta 9 trillones de registros (2^63 - 1).
+# Es el estándar moderno en Django desde la versión 3.2 para evitar que una base de datos
+# se quede sin identificadores si la tabla crece mucho.
+# ------------------------------------------------------------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ------------------------------------------------------------------------------

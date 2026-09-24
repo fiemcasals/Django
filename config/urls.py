@@ -27,7 +27,25 @@ urlpatterns = [
     path('', include('apps.core.urls', namespace='core')),
 ]
 
-# En modo DEBUG, le decimos a Django que sirva los archivos estáticos y media directamente
+# ------------------------------------------------------------------------------
+# SERVICIO DE ARCHIVOS ESTÁTICOS Y MEDIA EN DESARROLLO (DEBUG = True)
+# ------------------------------------------------------------------------------
+# Explicación para alumnos:
+# ¿Para qué sirve este bloque 'if settings.DEBUG'?
+#
+# 1. En DESARROLLO (DEBUG = True):
+#    El servidor de desarrollo de Django ('python manage.py runserver') no entrega
+#    archivos estáticos ni archivos subidos por usuarios (Media) por defecto.
+#    La función 'static()' le dice a Django:
+#    - "Cuando el navegador pida '/static/css/styles.css', buscalo en STATIC_ROOT o STATICFILES_DIRS y entregalo."
+#    - "Cuando pida '/media/foto.jpg', buscalo en la carpeta MEDIA_ROOT y entregalo."
+#
+# 2. En PRODUCCIÓN (DEBUG = False):
+#    Por motivos de rendimiento y seguridad, Django NUNCA debe entregar archivos estáticos
+#    en un servidor real. Esa tarea se delega a servidores web de alto rendimiento como
+#    Nginx, Caddy o servicios de almacenamiento en la nube (ej. Amazon S3 / Google Cloud Storage).
+#    Por eso este bloque sólo se activa cuando DEBUG es True.
+# ------------------------------------------------------------------------------
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
