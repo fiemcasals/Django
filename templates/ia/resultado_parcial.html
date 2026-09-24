@@ -1,0 +1,9 @@
+<!-- templates/ia/resultado_parcial.html -->
+<!-- Componente modular para renderizado de resultados parciales o llamadas AJAX -->
+<div class="card p-3 mb-2 border shadow-sm">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <span class="badge bg-primary">{{ resultado.fase_1.tool_invocado|default:"Directo" }}</span>
+        <small class="text-muted">{{ resultado.total_tokens }} tokens</small>
+    </div>
+    <p class="mb-0 small text-dark">{{ resultado.fase_2.respuesta_final }}</p>
+</div>

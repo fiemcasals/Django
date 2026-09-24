@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}{{ titulo_pagina }} - {{ APP_NAME }}{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="card profile-card">
+        <div class="profile-header">
+            <div class="profile-avatar">👤</div>
+            <div>
+                <h2>Panel de Usuario: {{ usuario.username }}</h2>
+                <span class="badge badge-success">Sesión Activa</span>
+            </div>
+        </div>
+
+        <div class="profile-details-grid">
+            <div class="detail-item">
+                <span class="detail-label">Nombre de usuario:</span>
+                <span class="detail-val"><code>{{ usuario.username }}</code></span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Email:</span>
+                <span class="detail-val">{{ usuario.email|default:"(Sin correo configurado)" }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Fecha de registro:</span>
+                <span class="detail-val">{{ usuario.date_joined|date:"d/m/Y H:i" }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Es Administrador (Superuser):</span>
+                <span class="detail-val">{% if usuario.is_superuser %}✅ Sí{% else %}❌ No{% endif %}</span>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <a href="{% url 'core:home' %}" class="btn btn-secondary">&larr; Volver al Inicio</a>
+            <a href="{% url 'usuarios:logout' %}" class="btn btn-danger">Cerrar Sesión</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

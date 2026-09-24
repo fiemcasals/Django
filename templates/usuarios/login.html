@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar Sesión - {{ APP_NAME }}{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="card auth-card">
+        <div class="auth-header">
+            <span class="auth-icon">🔐</span>
+            <h2>Iniciar Sesión</h2>
+            <p>Ingresá tus credenciales para acceder a las secciones protegidas.</p>
+        </div>
+
+        <form method="post" action="{% url 'usuarios:login' %}" class="auth-form">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-error">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="id_username">Nombre de Usuario:</label>
+                <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username" class="form-input" placeholder="Ej. admin o tu_usuario">
+                {% if form.username.errors %}
+                    <span class="field-error">{{ form.username.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_password">Contraseña:</label>
+                <input type="password" name="password" autocomplete="current-password" required id="id_password" class="form-input" placeholder="••••••••">
+                {% if form.password.errors %}
+                    <span class="field-error">{{ form.password.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            {% if request.GET.next %}
+                <input type="hidden" name="next" value="{{ request.GET.next }}">
+            {% endif %}
+
+            <button type="submit" class="btn btn-primary btn-block">Ingresar al Sistema</button>
+        </form>
+
+        <div class="auth-footer-notes">
+            <div class="note-box">
+                <strong>💡 Tip para alumnos:</strong>
+                <p>Podés crear un usuario administrador ejecutando en tu terminal: <code>python manage.py createsuperuser</code>.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

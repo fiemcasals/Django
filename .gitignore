@@ -1,0 +1,45 @@
+# ==============================================================================
+# .gitignore - Archivos y carpetas excluidos del control de versiones (Git)
+# ==============================================================================
+# Explicación para alumnos:
+# Este archivo le indica a Git qué archivos y carpetas NUNCA deben subirse al repositorio.
+# Esto incluye secretos (.env), entornos virtuales (venv/), archivos temporales de Python
+# (__pycache__) y bases de datos locales creadas durante las pruebas.
+# ==============================================================================
+
+# Entorno Virtual de Python
+venv/
+env/
+.venv/
+ENV/
+
+# Archivos de configuración con secretos (¡NUNCA subir a GitHub!)
+.env
+.env.local
+
+# Archivos temporales compilados por Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Base de datos local SQLite (si se usa en pruebas locales sin Docker)
+*.sqlite3
+db.sqlite3-journal
+
+# Archivos estáticos y de subida de usuarios (Media)
+staticfiles/
+media/
+
+# Archivos temporales del sistema operativo e IDEs
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Cobertura y reportes de tests
+.coverage
+htmlcov/
+.pytest_cache/

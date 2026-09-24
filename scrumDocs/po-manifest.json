@@ -1,0 +1,32 @@
+{
+  "projectId": "PROJ-1790258465125",
+  "lastSyncAt": "2026-09-24T17:20:20.000Z",
+  "userStoryMappings": [
+    {
+      "userStoryId": "US-1790269951533",
+      "code": "HU-01",
+      "sourceRef": "scrumDocs/historias-po.md#HU-01: Arquitectura base modular y entorno Dockerizado con documentación didáctica"
+    },
+    {
+      "userStoryId": "US-1790270031919",
+      "code": "HU-02",
+      "sourceRef": "scrumDocs/historias-po.md#HU-02: Módulo didáctico interactivo (Manual del Alumno) con mecanismo de activación u ocultamiento"
+    },
+    {
+      "userStoryId": "US-1790270167277",
+      "code": "HU-03",
+      "sourceRef": "scrumDocs/historias-po.md#HU-03: Autenticación de usuarios (Login, Logout y Restablecimiento de Contraseña)"
+    },
+    {
+      "userStoryId": "US-1790270297472",
+      "code": "HU-04",
+      "sourceRef": "scrumDocs/historias-po.md#HU-04: CRUD de información didáctico con indexación en base de datos PostgreSQL"
+    },
+    {
+      "userStoryId": "US-1790270414974",
+      "code": "HU-05",
+      "sourceRef": "scrumDocs/historias-po.md#HU-05: Consulta inteligente a base de datos asistida por IA (Anthropic API con optimización estricta de tokens)"
+    }
+  ],
+  "mappings": []
+}

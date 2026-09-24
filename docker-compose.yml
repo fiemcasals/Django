@@ -1,0 +1,75 @@
+# ==============================================================================
+# docker-compose.yml - Orquestador de Servicios (Django + PostgreSQL)
+# ==============================================================================
+# ¿Qué es Docker Compose?
+# Es una herramienta para definir y ejecutar aplicaciones multi-contenedor.
+# Con un único comando (`docker compose up`), levanta y conecta la base de datos
+# PostgreSQL y el servidor web Django en una red privada aislada.
+# ==============================================================================
+
+services:
+  # ----------------------------------------------------------------------------
+  # SERVICIO DE BASE DE DATOS: PostgreSQL 16
+  # ----------------------------------------------------------------------------
+  db:
+    image: postgres:16-alpine
+    container_name: django_db
+    restart: unless-stopped
+    # Variables de entorno para inicializar el motor de base de datos
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-django_db}
+      POSTGRES_USER: ${POSTGRES_USER:-django_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-django_password}
+    # Mapeo de puertos: host:contenedor
+    # Permite conectarse desde herramientas externas (DBeaver, pgAdmin) en localhost:5432
+    ports:
+      - "5432:5432"
+    # Volumen persistente: garantiza que los datos no se pierdan al reiniciar o borrar contenedores
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # Comprobación de salud (Healthcheck):
+    # Verifica activamente si PostgreSQL ya está listo para recibir conexiones antes de levantar Django.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-django_user} -d ${POSTGRES_DB:-django_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------------------------------------------------------
+  # SERVICIO DE APLICACIÓN WEB: Django 5.x
+  # ----------------------------------------------------------------------------
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: django_web
+    restart: unless-stopped
+    # Comando de ejecución: ejecuta el servidor de desarrollo en 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
+    # Mapeo de volúmenes para desarrollo en vivo (Live Reload):
+    # Los cambios que hagas en el código en tu editor se reflejan instantáneamente en el contenedor
+    volumes:
+      - .:/app
+    # Mapeo de puertos: host:contenedor (http://localhost:8000)
+    ports:
+      - "8000:8000"
+    # Variables de entorno pasadas al contenedor
+    environment:
+      - DEBUG=True
+      - SECRET_KEY=${SECRET_KEY:-django-insecure-dev-key-docker-environment-change-in-prod}
+      - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0,web
+      # DATABASE_URL: Nótese que el host es 'db' (el nombre del servicio en esta red)
+      - DATABASE_URL=postgres://${POSTGRES_USER:-django_user}:${POSTGRES_PASSWORD:-django_password}@db:5432/${POSTGRES_DB:-django_db}
+    # Dependencia orquestada:
+    # Espera a que el servicio 'db' esté completamente saludable (healthy) antes de iniciar 'web'
+    depends_on:
+      db:
+        condition: service_healthy
+
+# ------------------------------------------------------------------------------
+# VOLÚMENES PERSISTENTES
+# ------------------------------------------------------------------------------
+volumes:
+  # Almacena los archivos binarios de la base de datos de forma independiente al ciclo de vida del contenedor
+  postgres_data:
+    driver: local

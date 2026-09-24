@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}{{ accion }} - {{ APP_NAME }}{% endblock %}
+
+{% block content %}
+<div class="auth-container" style="max-width: 650px;">
+    <div class="card auth-card">
+        <div class="auth-header">
+            <span class="auth-icon">📝</span>
+            <h2>{{ accion }}</h2>
+            <p>Completá los campos para guardar el registro en la base de datos.</p>
+        </div>
+
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-error">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="id_titulo">Título:</label>
+                {{ form.titulo }}
+                {% if form.titulo.errors %}
+                    <span class="field-error">{{ form.titulo.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_categoria">Categoría:</label>
+                {{ form.categoria }}
+                {% if form.categoria.errors %}
+                    <span class="field-error">{{ form.categoria.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_precio">Precio ($):</label>
+                {{ form.precio }}
+                {% if form.precio.errors %}
+                    <span class="field-error">{{ form.precio.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_descripcion">Descripción detallada:</label>
+                {{ form.descripcion }}
+                {% if form.descripcion.errors %}
+                    <span class="field-error">{{ form.descripcion.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
+                {{ form.disponible }}
+                <label for="id_disponible" style="margin-bottom: 0;">¿Disponible en catálogo y consultas de IA?</label>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; gap: 1rem; margin-top: 1rem;">
+                <a href="{% url 'datos:lista' %}" class="btn btn-outline">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Guardar Ítem</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
