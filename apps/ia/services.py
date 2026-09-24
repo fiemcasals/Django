@@ -149,7 +149,11 @@ class ClaudeService:
         """
         Inicializa el cliente de Anthropic con la API key provista o desde settings.
         """
-        self.api_key = api_key or getattr(settings, 'ANTHROPIC_API_KEY', '')
+        if api_key is not None:
+            self.api_key = api_key
+        else:
+            self.api_key = getattr(settings, 'ANTHROPIC_API_KEY', '')
+
         self.model = model
         self.client = None
 
