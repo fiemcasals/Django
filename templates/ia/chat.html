@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Asistente IA Didáctico (Tool Calling 2 Fases) - {{ APP_NAME }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Encabezado Didáctico -->
+    <div class="card mb-4 border-0 shadow-sm hero-ia-card">
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <span class="badge bg-primary text-uppercase px-3 py-2">Módulo Didáctico de IA</span>
+                <span class="badge bg-dark text-light px-3 py-2">Anthropic Claude SDK &bull; Tool Calling 2-Fases</span>
+            </div>
+            <h1 class="h2 fw-bold mb-2">Consulta Inteligente a Base de Datos con IA</h1>
+            <p class="text-muted lead mb-0">
+                Aprende cómo interactúa un Modelo de Lenguaje (LLM) con PostgreSQL mediante <strong>Tool Calling en 2 Pasos</strong>,
+                evitando enviar bases completas y reduciendo el consumo de tokens en más del 80%.
+            </p>
+        </div>
+    </div>
+
+    <!-- Guía Conceptual de las 2 Fases -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="p-3 bg-light rounded-3 border h-100">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="badge bg-primary rounded-circle px-2 py-1">1</span>
+                    <strong class="text-primary">Fase 1: Selección de Tool</strong>
+                </div>
+                <p class="small text-muted mb-0">
+                    Se envía a Claude únicamente la pregunta y el esquema liviano de herramientas JSON Schema (sin filas de BD). Claude decide qué método ejecutar.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 bg-light rounded-3 border h-100">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="badge bg-success rounded-circle px-2 py-1">⚡</span>
+                    <strong class="text-success">Backend: Consulta ORM</strong>
+                </div>
+                <p class="small text-muted mb-0">
+                    El backend Django ejecuta la consulta en PostgreSQL de forma local utilizando índices optimizados (B-Tree).
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 bg-light rounded-3 border h-100">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="badge bg-info rounded-circle px-2 py-1">2</span>
+                    <strong class="text-info">Fase 2: Síntesis Final</strong>
+                </div>
+                <p class="small text-muted mb-0">
+                    Se reenvían a Claude solo los registros filtrados para que redacte una respuesta natural, precisa y libre de alucinaciones.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulario de Consulta -->
+    <div class="card mb-4 shadow-sm border-0">
+        <div class="card-body p-4">
+            <form method="post" action="{% url 'ia:consultas' %}" id="ia-query-form">
+                {% csrf_token %}
+                <label for="{{ form.pregunta.id_for_label }}" class="form-label fw-bold mb-2">¿Qué deseas consultar en el catálogo?</label>
+                <div class="input-group mb-3">
+                    {{ form.pregunta }}
+                    <button type="submit" class="btn btn-primary px-4 fw-semibold" id="btn-consultar-ia">
+                        Consultar IA ⚡
+                    </button>
+                </div>
+                {% if form.pregunta.errors %}
+                    <div class="text-danger small mb-2">
+                        {{ form.pregunta.errors.0 }}
+                    </div>
+                {% endif %}
+
+                <!-- Preguntas Sugeridas -->
+                <div class="d-flex align-items-center flex-wrap gap-2 pt-2">
+                    <span class="small text-muted fw-semibold">Sugerencias rápidas:</span>
+                    {% for sug in preguntas_sugeridas %}
+                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill suggestion-btn"
+                                onclick="document.getElementById('id_pregunta_ia').value='{{ sug }}';">
+                            {{ sug }}
+                        </button>
+                    {% endfor %}
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Renderizado de Resultados y Visualización de Fases -->
+    {% if resultado %}
+        {% if resultado.status == 'success' %}
+            <div class="resultado-ia-container mb-5">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <h3 class="h4 fw-bold mb-0">Flujo de Ejecución en 2 Fases</h3>
+                    <span class="badge bg-dark px-3 py-2">Consumo Total: <strong>{{ resultado.total_tokens }} tokens</strong></span>
+                </div>
+
+                <!-- Tarjeta Fase 1 -->
+                <div class="card mb-3 border-primary shadow-sm">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>Paso 1: Resolución y Selección de Herramienta (Claude)</strong>
+                        </div>
+                        <span class="badge bg-light text-primary">
+                            In: {{ resultado.fase_1.tokens_fase_1.input_tokens }} tok | Out: {{ resultado.fase_1.tokens_fase_1.output_tokens }} tok
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        {% if resultado.fase_1.tool_invocado %}
+                            <div class="mb-2">
+                                <span class="text-muted">Herramienta invocada por el LLM:</span>
+                                <code class="fs-6 px-2 py-1 bg-light rounded text-primary fw-bold">{{ resultado.fase_1.tool_invocado }}</code>
+                            </div>
+                            <div>
+                                <span class="text-muted">Argumentos seleccionados:</span>
+                                <pre class="bg-light p-2 rounded small mt-1 mb-0"><code>{{ resultado.fase_1.parametros }}</code></pre>
+                            </div>
+                        {% else %}
+                            <p class="text-muted mb-0">Claude respondió directamente a la consulta sin requerir llamadas a herramientas.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Tarjeta Ejecución Local PostgreSQL -->
+                {% if resultado.fase_1.tool_invocado %}
+                <div class="card mb-3 border-success shadow-sm">
+                    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>Paso Intermedio: Ejecución Local en PostgreSQL (Django ORM)</strong>
+                        </div>
+                        <span class="badge bg-light text-success">
+                            {{ resultado.fase_2.registros_encontrados }} registros obtenidos
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        {% if resultado.fase_2.datos_locales %}
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Título</th>
+                                            <th>Categoría</th>
+                                            <th>Descripción / Metadatos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in resultado.fase_2.datos_locales %}
+                                            <tr>
+                                                <td><span class="badge bg-secondary">#{{ item.id }}</span></td>
+                                                <td><strong>{{ item.titulo }}</strong></td>
+                                                <td><span class="badge bg-info text-dark">{{ item.categoria }}</span></td>
+                                                <td class="small text-muted">{{ item.descripcion|truncatewords:15 }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <p class="text-muted mb-0">No se encontraron registros en la base de datos para los filtros especificados.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Tarjeta Fase 2: Síntesis Final -->
+                <div class="card mb-3 border-info shadow-sm">
+                    <div class="card-header bg-info text-dark d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>Paso 2: Síntesis Contextualizada (Claude)</strong>
+                        </div>
+                        <span class="badge bg-dark text-white">
+                            In: {{ resultado.fase_2.tokens_fase_2.input_tokens }} tok | Out: {{ resultado.fase_2.tokens_fase_2.output_tokens }} tok
+                        </span>
+                    </div>
+                    <div class="card-body p-4 bg-white">
+                        <div class="p-3 bg-light rounded-3 border-start border-info border-4">
+                            <p class="mb-0 fs-6 lh-base" style="white-space: pre-line;">{{ resultado.fase_2.respuesta_final }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% elif resultado.status == 'error' %}
+            <!-- Mensaje de Error Visual y Didáctico -->
+            <div class="alert alert-warning shadow-sm border-warning p-4 mb-4" role="alert">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <h4 class="alert-heading h5 mb-0 fw-bold">⚠️ Aviso del Servicio de IA</h4>
+                    <span class="badge bg-warning text-dark">{{ resultado.error_type }}</span>
+                </div>
+                <p class="mb-2">{{ resultado.message }}</p>
+                <hr>
+                <p class="small text-muted mb-0">
+                    <strong>¿Cómo solucionarlo?</strong> Asegúrate de configurar la clave en el archivo <code>.env</code>:
+                    <br>
+                    <code>ANTHROPIC_API_KEY=sk-ant-api03-...</code>
+                </p>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}
