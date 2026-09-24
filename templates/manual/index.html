@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}{{ titulo_pagina }}{% endblock %}
+
+{% block content %}
+<div class="manual-container">
+    <div class="manual-header">
+        <span class="badge badge-success">📖 Módulo Pedagógico</span>
+        <h1 class="page-title">Guía y Manual Interactivo del Alumno</h1>
+        <p class="page-subtitle">
+            Esta guía interactiva explica paso a paso la arquitectura de Django, el patrón MVT, el flujo de ejecución de solicitudes y los comandos esenciales de desarrollo.
+        </p>
+    </div>
+
+    <!-- Switch info badge -->
+    <div class="feature-flag-alert">
+        <span class="flag-icon">💡</span>
+        <div>
+            <strong>Concepto Pedagógico: Feature Toggle (Switch de Funcionalidad)</strong>
+            <p>Este módulo completo está controlado por la variable de entorno <code>ENABLE_STUDENT_MANUAL</code> en el archivo <code>.env</code>. Si la cambias a <code>False</code>, el módulo desaparece del menú y sus rutas devuelven un error 404 de forma totalmente desacoplada.</p>
+        </div>
+    </div>
+
+    <!-- Secciones del Manual -->
+    <div class="manual-grid">
+        <div class="card manual-card">
+            <div class="card-icon">🏛️</div>
+            <h3>1. Arquitectura MVT y Ciclo de Petición</h3>
+            <p>Descubrí cómo interactúan el Modelo (ORM), la Vista (Lógica) y el Template (HTML) cuando un usuario ingresa a una URL.</p>
+            <a href="{% url 'manual:arquitectura' %}" class="btn btn-primary">Ver Arquitectura &rarr;</a>
+        </div>
+
+        <div class="card manual-card">
+            <div class="card-icon">⚡</div>
+            <h3>2. Diccionario de Comandos</h3>
+            <p>Guía de referencia rápida con los comandos de terminal de <code>manage.py</code> y <code>docker compose</code> más utilizados, con botón para copiar al portapapeles.</p>
+            <a href="{% url 'manual:comandos' %}" class="btn btn-primary">Ver Comandos &rarr;</a>
+        </div>
+
+        <div class="card manual-card">
+            <div class="card-icon">🧩</div>
+            <h3>3. Estructura Modular y Desacople</h3>
+            <p>Comprende por qué el proyecto organiza las funcionalidades en la carpeta <code>apps/</code> y cómo crear nuevas apps sin contaminar el código base.</p>
+            <a href="{% url 'manual:arquitectura' %}#modularidad" class="btn btn-secondary">Ver Modularidad &rarr;</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

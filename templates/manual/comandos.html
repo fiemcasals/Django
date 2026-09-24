@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}{{ titulo_pagina }}{% endblock %}
+
+{% block content %}
+<div class="manual-container">
+    <div class="breadcrumb">
+        <a href="{% url 'manual:index' %}">&larr; Volver al Índice del Manual</a>
+    </div>
+
+    <div class="manual-header">
+        <span class="badge badge-warning">⚡ Terminal</span>
+        <h1 class="page-title">Diccionario de Comandos Esenciales</h1>
+        <p class="page-subtitle">
+            Referencia rápida de los comandos más utilizados en el ciclo de vida de un proyecto Django y Docker.
+        </p>
+    </div>
+
+    {% for grupo in grupos_comandos %}
+    <div class="command-group-card">
+        <h2 class="group-title">{{ grupo.categoria }}</h2>
+        <div class="command-list">
+            {% for item in grupo.items %}
+            <div class="command-row">
+                <div class="command-code-box">
+                    <code id="cmd-{{ forloop.parentloop.counter }}-{{ forloop.counter }}">{{ item.comando }}</code>
+                    <button class="btn-copy" onclick="copyCommand('cmd-{{ forloop.parentloop.counter }}-{{ forloop.counter }}')" title="Copiar al portapapeles">
+                        📋 Copiar
+                    </button>
+                </div>
+                <div class="command-description">
+                    <p>{{ item.descripcion }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+function copyCommand(elementId) {
+    const text = document.getElementById(elementId).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        const btn = event.target;
+        const originalText = btn.innerText;
+        btn.innerText = '✅ ¡Copiado!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+            btn.innerText = originalText;
+            btn.classList.remove('copied');
+        }, 2000);
+    });
+}
+</script>
+{% endblock %}
