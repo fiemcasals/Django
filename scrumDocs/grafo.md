@@ -1,6 +1,6 @@
 # Grafo de Dependencias -- django
 
-_Generado automaticamente el 2026-09-24T17:41:20.777Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-24T17:48:04.225Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ```mermaid
 graph TD
@@ -13,6 +13,7 @@ graph TD
   end
   subgraph US_1790270167277["HU-03: Autenticación de usuarios (Login, Logout y Restablecimiento de Contraseña)"]
     REQ_1790271633298["RF-01: Sistema de inicio, cierre de sesión y control de acceso"]
+    REQ_1790272080655["RF-02: Circuito de restablecimiento y cambio de contraseña con emisor de consola"]
   end
   REQ_1790271231287 --> REQ_1790271332189
   REQ_1790271231287 --> REQ_1790271443931
