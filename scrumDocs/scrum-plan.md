@@ -1,20 +1,24 @@
 # Plan de Requerimientos — django
 
-_Generado automáticamente el 2026-09-24T17:41:17.181Z — no editar a mano, se sobreescribe en cada publicación._
+_Generado automáticamente el 2026-09-24T17:48:00.684Z — no editar a mano, se sobreescribe en cada publicación._
 
 Orden sugerido de desarrollo (respeta dependencias entre Requerimientos). Cada fila indica de qué Requerimientos depende, si tiene.
 
 | Orden | Código | Requerimiento | Historia de Usuario | Módulo | Entrega | Estado | Desarrollador | Depende de | Rechazos |
 |---|---|---|---|---|---|---|---|---|---|
 | 1 | RF-01 | Configuración central y estructura modular de aplicaciones Django | HU-01 | — | — | Hacer | dev-django | — | — |
-| 2 | RNF-01 | Contenerización del entorno con Docker, docker-compose y PostgreSQL | HU-01 | — | — | Hacer | dev-django | RF-01 | — |
-| 3 | RF-01 | Módulo interactivo de Guía/Manual del Alumno con switch de activación | HU-02 | — | — | Hacer | dev-django | RF-01 | — |
-| 4 | RF-01 | Sistema de inicio, cierre de sesión y control de acceso | HU-03 | — | — | Hacer | dev-django | RF-01 | — |
+| 2 | RF-02 | Circuito de restablecimiento y cambio de contraseña con emisor de consola | HU-03 | — | — | Hacer | dev-django | — | — |
+| 3 | RNF-01 | Contenerización del entorno con Docker, docker-compose y PostgreSQL | HU-01 | — | — | Hacer | dev-django | RF-01 | — |
+| 4 | RF-01 | Módulo interactivo de Guía/Manual del Alumno con switch de activación | HU-02 | — | — | Hacer | dev-django | RF-01 | — |
+| 5 | RF-01 | Sistema de inicio, cierre de sesión y control de acceso | HU-03 | — | — | Hacer | dev-django | RF-01 | — |
 
 ## Detalle
 
 ### RF-01 — Configuración central y estructura modular de aplicaciones Django
 - Estimado: 4h
+
+### RF-02 — Circuito de restablecimiento y cambio de contraseña con emisor de consola
+- Estimado: 3h
 
 ### RNF-01 — Contenerización del entorno con Docker, docker-compose y PostgreSQL
 - Estimado: 4h
