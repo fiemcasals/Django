@@ -50,12 +50,12 @@
                     <a href="{% url 'manual:index' %}" class="nav-link nav-badge">Manual Alumno</a>
                 {% endif %}
                 
-                <!-- Sección de autenticación (se completará dinámicamente en HU-03) -->
+                <!-- Sección de autenticación de usuarios -->
                 {% if user.is_authenticated %}
-                    <span class="user-greeting">Hola, <strong>{{ user.username }}</strong></span>
-                    <a href="#logout" class="btn btn-sm btn-outline">Salir</a>
+                    <a href="{% url 'usuarios:perfil' %}" class="user-greeting" title="Ver mi perfil">Hola, <strong>{{ user.username }}</strong></a>
+                    <a href="{% url 'usuarios:logout' %}" class="btn btn-sm btn-outline">Salir</a>
                 {% else %}
-                    <a href="#login" class="btn btn-sm btn-primary">Ingresar</a>
+                    <a href="{% url 'usuarios:login' %}" class="btn btn-sm btn-primary">Ingresar</a>
                 {% endif %}
             </nav>
         </div>

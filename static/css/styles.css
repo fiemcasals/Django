@@ -369,6 +369,130 @@ code, pre {
 .badge-warning { background-color: var(--warning-bg); color: var(--warning); }
 .badge-info { background-color: #e0f2fe; color: #0369a1; }
 
+/* 9. Módulo de Autenticación y Perfil */
+.auth-container, .profile-container {
+    max-width: 480px;
+    margin: 2rem auto;
+}
+
+.profile-container {
+    max-width: 650px;
+}
+
+.auth-card, .profile-card {
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2.25rem;
+    box-shadow: var(--shadow-md);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.auth-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.auth-header h2 {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    margin-bottom: 0.25rem;
+}
+
+.auth-header p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.auth-footer-notes {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.note-box {
+    background-color: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.profile-avatar {
+    font-size: 3rem;
+    background-color: var(--primary-light);
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.profile-details-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background-color: #f8fafc;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+}
+
+.detail-label {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.detail-val {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.profile-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.btn-danger {
+    background-color: #ef4444;
+    color: white;
+    padding: 0.6rem 1.25rem;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: none;
+=======
 /* 7. Manual del Alumno (Apps Manual) */
 .manual-container {
     max-width: 1000px;
@@ -591,10 +715,18 @@ code, pre {
     border-radius: var(--radius-sm);
     padding: 4px 10px;
     font-size: 0.8rem;
+>>>>>>> origin/dev
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
+<<<<<<< HEAD
+.btn-danger:hover {
+    background-color: #dc2626;
+}
+
+/* 10. Footer */
+=======
 .btn-copy:hover {
     background: rgba(255, 255, 255, 0.2);
 }
@@ -611,6 +743,7 @@ code, pre {
 }
 
 /* 8. Footer */
+>>>>>>> origin/dev
 .footer {
     background-color: #ffffff;
     border-top: 1px solid var(--border-color);

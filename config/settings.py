@@ -68,14 +68,25 @@ DJANGO_APPS = [
 ]
 
 LOCAL_APPS = [
-    'apps.core.apps.CoreConfig',     # App base de bienvenida y utilidades globales
-    'apps.manual.apps.ManualConfig', # App didáctica del Manual del Alumno
+    'apps.core.apps.CoreConfig',         # App base de bienvenida y utilidades globales
+    'apps.manual.apps.ManualConfig',     # App didáctica del Manual del Alumno
+    'apps.usuarios.apps.UsuariosConfig', # App de autenticación y gestión de usuarios
 ]
 
 # Switch didáctico: Si la app de manual está activa, la exponemos
 ENABLE_STUDENT_MANUAL = env('ENABLE_STUDENT_MANUAL', default=True)
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
+
+# ------------------------------------------------------------------------------
+# REDIRECCIONES Y AUTENTICACIÓN
+# ------------------------------------------------------------------------------
+# Dónde enviar al usuario cuando intenta ingresar a una ruta protegida con @login_required
+LOGIN_URL = 'usuarios:login'
+# Dónde redirigir tras un inicio de sesión exitoso
+LOGIN_REDIRECT_URL = 'core:home'
+# Dónde redirigir tras cerrar sesión
+LOGOUT_REDIRECT_URL = 'core:home'
 
 # ------------------------------------------------------------------------------
 # 4. MIDDLEWARE (Capa Intermedia de Procesamiento HTTP)

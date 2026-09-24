@@ -26,6 +26,13 @@ urlpatterns = [
     # Módulo interactivo de Guía/Manual del Alumno (/manual/)
     path('manual/', include('apps.manual.urls', namespace='manual')),
 
+    # Módulo de Autenticación y Gestión de Usuarios (/usuarios/)
+    path('usuarios/', include('apps.usuarios.urls', namespace='usuarios')),
+
+    # Atajos de rutas directas para Login y Logout
+    path('login/', include(('apps.usuarios.urls', 'usuarios'), namespace='auth_login')),
+    path('logout/', include(('apps.usuarios.urls', 'usuarios'), namespace='auth_logout')),
+
     # Incluimos las rutas de la app principal 'core' en la raíz (/)
     path('', include('apps.core.urls', namespace='core')),
 ]
