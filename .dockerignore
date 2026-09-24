@@ -1,0 +1,44 @@
+# ==============================================================================
+# .dockerignore - Archivos excluidos del contexto de compilación de Docker
+# ==============================================================================
+# ¿Qué es .dockerignore?
+# Funciona igual que .gitignore: le dice a Docker qué archivos y carpetas NO deben
+# copiarse dentro de la imagen. Esto evita transferir archivos pesados o sensibles,
+# acelera la construcción y protege contraseñas.
+# ==============================================================================
+
+# Entornos virtuales locales
+.venv/
+venv/
+env/
+ENV/
+
+# Archivos de caché de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Secretos y variables de entorno locales
+.env
+.env.local
+
+# Control de versiones
+.git/
+.gitignore
+
+# Base de datos SQLite local (en Docker usamos PostgreSQL)
+*.sqlite3
+db.sqlite3
+
+# Archivos estáticos y media compilados localmente
+staticfiles/
+media/
+
+# Archivos temporales de editores e IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
