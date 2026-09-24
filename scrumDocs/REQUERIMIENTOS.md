@@ -1,6 +1,6 @@
 # Requerimientos -- django
 
-_Generado automaticamente el 2026-09-24T19:40:44.091Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-24T19:41:38.716Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ## HU-01: Arquitectura base modular y entorno Dockerizado con documentación didáctica
 
