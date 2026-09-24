@@ -1,6 +1,6 @@
 # Plan de Requerimientos — django
 
-_Generado automáticamente el 2026-09-24T19:59:55.482Z — no editar a mano, se sobreescribe en cada publicación._
+_Generado automáticamente el 2026-09-24T23:39:22.269Z — no editar a mano, se sobreescribe en cada publicación._
 
 Orden sugerido de desarrollo (respeta dependencias entre Requerimientos). Cada fila indica de qué Requerimientos depende, si tiene.
 
@@ -23,7 +23,7 @@ Inicio de desarrollo de RF-01: Configuración central y estructura modular de ap
 - Estimado: 4h
 
 ### RNF-01 — Contenerización del entorno con Docker, docker-compose y PostgreSQL
-- Estimado: 4h
+- Estimado: 1h
 
 ### RF-01 — Módulo interactivo de Guía/Manual del Alumno con switch de activación
 - Estimado: 4h
