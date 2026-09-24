@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from apps.usuarios.views import CustomLoginView, logout_view
 
 urlpatterns = [
     # Panel de administración de Django (http://localhost:8000/admin/)
@@ -30,8 +31,8 @@ urlpatterns = [
     path('usuarios/', include('apps.usuarios.urls', namespace='usuarios')),
 
     # Atajos de rutas directas para Login y Logout
-    path('login/', include(('apps.usuarios.urls', 'usuarios'), namespace='auth_login')),
-    path('logout/', include(('apps.usuarios.urls', 'usuarios'), namespace='auth_logout')),
+    path('login/', CustomLoginView.as_view(), name='login'),
+    path('logout/', logout_view, name='logout'),
 
     # Incluimos las rutas de la app principal 'core' en la raíz (/)
     path('', include('apps.core.urls', namespace='core')),

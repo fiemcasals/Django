@@ -26,8 +26,8 @@ class AutenticacionTests(TestCase):
             password=self.password,
             email='alumno@universidad.edu.ar'
         )
-        self.login_url = reverse('usuarios:login')
-        self.logout_url = reverse('usuarios:logout')
+        self.login_url = reverse('login')
+        self.logout_url = reverse('logout')
         self.perfil_url = reverse('usuarios:perfil')
 
     def test_login_renderiza_formulario_200(self):
