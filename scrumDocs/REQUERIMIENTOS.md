@@ -1,6 +1,6 @@
 # Requerimientos -- django
 
-_Generado automaticamente el 2026-09-24T17:37:36.548Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-24T17:40:35.956Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ## HU-01: Arquitectura base modular y entorno Dockerizado con documentación didáctica
 
@@ -17,3 +17,9 @@ Crear el archivo Dockerfile optimizado (Python 3.12) y docker-compose.yml que or
 ### RF-01: Módulo interactivo de Guía/Manual del Alumno con switch de activación (Funcional)
 
 Crear una aplicación independiente (apps/manual/) con vistas y plantillas que expliquen interactivamente la arquitectura de Django (MVT, flujo de peticiones y comandos de terminal). El módulo debe activarse o desactivarse mediante la variable de entorno ENABLE_STUDENT_MANUAL. Si está inactivo, las rutas deben quedar inaccesibles (404) y ocultar los links del menú. Todo el código de la app debe estar desacoplado para permitir su eliminación limpia sin romper el proyecto. Entregables: apps/manual/ (apps.py, views.py, urls.py) y templates/manual/ (index.html, arquitectura.html, comandos.html). Condición de aprobación: con ENABLE_STUDENT_MANUAL=True el manual es navegable en /manual/; con False retorna 404 y se oculta del navbar; remover la app no rompe el resto del sistema.
+
+## HU-03: Autenticación de usuarios (Login, Logout y Restablecimiento de Contraseña)
+
+### RF-01: Sistema de inicio, cierre de sesión y control de acceso (Funcional)
+
+Implementar vistas, formularios y templates para Login (/login/) y Logout (/logout/). Configurar variables LOGIN_URL, LOGIN_REDIRECT_URL y LOGOUT_REDIRECT_URL. Aplicar decorador @login_required y adaptar barra de navegación. Entregables: apps/usuarios/ (views.py, urls.py), templates/registration/ (login.html, logged_out.html), apps/usuarios/tests/test_auth.py. Suite de tests obligatoria: login credenciales válidas (302), login inválidas (200 con error), logout cierra sesión, vista protegida redirige a anónimos y responde 200 a autenticados. Aprobación: python manage.py test apps.usuarios.tests.test_auth OK (5 tests pasados).
