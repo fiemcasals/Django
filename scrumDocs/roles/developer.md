@@ -1,6 +1,6 @@
 # Developer — qué podés hacer en este proyecto
 
-_Generado automáticamente el 2026-09-24T19:11:22.760Z -- no editar a mano, se sobreescribe en cada publicación._
+_Generado automáticamente el 2026-09-24T19:25:44.613Z -- no editar a mano, se sobreescribe en cada publicación._
 
 Este es el documento de **tu** rol. Lo leés vos (la IA que asiste a un `developer`) y nadie
 más: los otros roles tienen el suyo en `scrumDocs/roles/`. El procedimiento paso a paso
@@ -21,6 +21,23 @@ to_do → doing → pr_open │ merged_dev → in_testing → tested → in_prod
 Todo lo que está a la derecha de la barra es consecuencia de un merge o de una promoción
 que hace otro rol. Que tu tramo termine en `pr_open` no es una limitación administrativa:
 es lo último que depende de vos.
+
+## Entregás solo, de punta a punta
+
+Rama, checkout, `doing`, código, pruebas, commit, push, Pull Request y `pr_open`: **todo
+eso es tuyo y lo hacés sin pedir permiso.** No le pidas a nadie que copie un `git push`,
+que abra el PR a mano o que arrastre la tarjeta en el tablero. Frenar a mitad para que una
+persona ejecute un paso mecánico no es prudencia: deja la tarjeta a medio camino, con el
+reloj corriendo y el trabajo sin entregar.
+
+Lo único que se le lleva a una persona es un **impedimento real** —no tenés permiso en el
+repositorio, falta una credencial, la condición depende de algo que todavía no existe— o
+una decisión que no te corresponde. Todo lo demás se resuelve trabajando.
+
+Y las credenciales: usás **las que el usuario tenga puestas** (`gh` autenticado, o
+`$GITHUB_TOKEN` exportado). No salgas a buscar tokens por el repositorio, el `.env` o la
+config de git: uno encontrado así casi nunca es el de esta persona, y usarlo escribe en
+GitHub a nombre de otro. Si no hay credencial, eso **es** el impedimento.
 
 ## Uno por vez, terminado de verdad
 
@@ -275,13 +292,13 @@ código → pruebas en verde → documentación → «¿lo damos por terminado?�
   tarjeta todavía en `doing`: el reloj sigue corriendo porque el trabajo sigue, y eso es lo
   correcto. Abrir el PR con la suite en rojo le deja al Scrum Master algo que no pasa sus
   propias pruebas, y arreglarlo después no se lo cobra a nadie.
-- **El paso a Hecho lo decide la persona, no vos.** Con las pruebas corridas, mostrale el
-  resultado (cuántas pasaron, cuántas fallaron), qué implementaste y cuánto lleva corrido el
-  reloj, y preguntale si lo damos por terminado — diciendo explícitamente que abrir el PR y
-  pasar a Hecho **corta el reloj**. Si dice que no, o pide cambios, o no contesta: la
-  tarjeta se queda en `doing` y el reloj sigue. Esa confirmación no se saltea aunque te
-  hayan dicho "hacé todo" al principio: es la única acción que congela el cronómetro, y una
-  vez congelado, el tiempo que se siga trabajando no se lo cobra nadie.
+- **El tramo lo cerrás vos, y el reloj para cuando para el trabajo.** Con la suite en
+  verde, las condiciones cubiertas y la entrega escrita, abrís el Pull Request y mandás
+  `pr_open` en el acto — sin pedir permiso. Ese PATCH congela el cronómetro, y tiene que
+  congelarse justo ahí: dejarlo corriendo mientras alguien contesta un mensaje le carga a
+  la tarjeta horas en las que nadie trabajó, que es exactamente la mentira que el
+  cronómetro existe para evitar. Después informás lo que quedó hecho; no es un pedido de
+  permiso, es un parte.
 - **`pr_open` no es "reportar avance": es "de mi lado está listo".** Mandarlo antes de
   tener el PR —para que la tarjeta "muestre progreso"— congela el cronómetro mientras
   seguís laburando, y todo lo que venga después queda sin registrar. El tiempo real de esa
