@@ -150,6 +150,62 @@ misma confianza que no tener el test.
 
 Decile al usuario el orden que armaste y por dónde vas a arrancar, antes de escribir nada.
 
+## 2.7. Las condiciones de aprobación son la lista de lo que hay que probar
+
+Cada Requerimiento trae `acceptanceCriteria`: lo que tiene que ser verdad para darlo por
+terminado, escrito por quien definió el alcance. **De ahí salen los Tests**, no de tu
+criterio sobre qué conviene probar. Una condición, al menos un Test.
+
+Si una condición no se puede traducir a un Test, es una de dos cosas, y las dos se dicen
+en vez de saltearlas: o está mal escrita —no se verifica mirando el sistema— o lo que
+describe todavía no está implementado.
+
+Si el Requerimiento no tiene condiciones cargadas, **decilo y no las inventes**: probar
+contra lo que vos suponés que había que hacer es cómo un Test termina certificando algo que
+nadie pidió. Las escriben el Project Manager o el Scrum Master.
+
+## 2.75. Las tuyas son las de etapa `integracion`
+
+Cada Requerimiento tiene DOS juegos de pruebas, y en la app se ven separados:
+
+| Etapa | La corre | Dónde |
+|---|---|---|
+| `desarrollo` | el programador | la rama del Requerimiento, aislado, con datos fijos |
+| `integracion` | **vos** | `dev`, con todo mergeado |
+
+**Las de `desarrollo` no son tuyas y no las vuelvas a correr.** Ya están en verde en la
+rama del programador y ahí probaron lo que podían probar: su pedazo, solo. Correrlas nuevo
+no agrega información — lo que falta saber es otra cosa.
+
+**Las de `integracion` las dejó preparadas él y las corrés vos**, sobre `dev` y contra el
+entorno desplegado. Ahí es donde aparece lo que la rama aislada no podía ver: que dos
+Requerimientos escriban sobre la misma tabla, que el orden de los migrations importe, que
+el servicio de al lado devuelva algo distinto de lo que el mock devolvía.
+
+Si una de integración está vacía o sus pasos no alcanzan para correrla, **decilo nombrando
+el Requerimiento** en vez de redactarla vos: entenderla de nuevo desde el código es el
+trabajo que el programador ya hizo, y devolvérselo es más barato que repetirlo.
+
+## 2.8. Lo que el developer te dejó, antes de leer una línea de código
+
+Cada Requerimiento entregado deja dos archivos:
+
+- `scrumDocs/entregas/<CODIGO>.md` — qué quedó implementado, cómo se levanta y se prueba,
+  qué datos hacen falta, qué endpoints o pantallas toca, **cómo se corre integrado**, y
+  **qué quedó afuera o se asumió**.
+- `scrumDocs/entregas/<CODIGO>.sh` — el script que recorre el flujo completo ya integrado,
+  prepara sus datos y los limpia. Corre con `bash scrumDocs/entregas/<CODIGO>.sh`, y con
+  `--carga N` repite el recorrido N veces reportando cuántas fallaron y cuánto tardó la más
+  lenta. **Corrélo antes de tocar nada**: te dice en un comando si lo integrado se sostiene,
+  y el modo carga es lo único que muestra lo que aparece recién bajo uso.
+Leelo primero: te ahorra reconstruir desde el código lo que ya está escrito, y el punto de
+lo asumido es el que evita que reportes como defecto una decisión deliberada.
+
+Si ese documento no está, o no alcanza para probar sin preguntarle al developer, **decilo
+en el resumen final nombrando el Requerimiento**. No es burocracia: la entrega estaba
+incompleta, y si lo resolvés preguntando por chat esa información no queda en ningún lado
+para el próximo que la necesite.
+
 ## 3. Entender el endpoint real leyendo el código
 
 **Esto es lo que diferencia a este skill de escribir el manifest a mano.** Para cada
