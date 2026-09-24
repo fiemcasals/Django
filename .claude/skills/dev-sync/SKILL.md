@@ -612,41 +612,133 @@ una sola vez y no se reinicia.
       exactamente lo que tiene que pasar — el reloj sigue corriendo porque el trabajo sigue.
       Arreglar después del PR le carga esas horas a nadie y deja al Scrum Master mergeando
       algo que no pasa sus propias pruebas.
-   4. **Dejá la documentación respaldatoria en el repo**, en el mismo commit: qué hace lo
-      que implementaste y cómo se verifica. Si el Requerimiento no tiene código (una No
-      Funcional de política o configuración), el documento **es** la entrega.
+   4. **Las pruebas de la app son DOS juegos, y los dos son tuyos de preparar.** Cada
+      condición de aprobación deja dos Tests cargados, y en la pestaña "Pruebas" se ven
+      separados:
 
-   4.5. **Recorré los criterios de aceptación, uno por uno.** Traé la Historia que
-      contiene este Requerimiento
-      (`GET $SCRUM_API_URL/api/v1/projects/$PROJECT_ID/user-stories`, campo
-      `acceptanceCriteria`) y armá una tabla corta: cada criterio que le toca a ESTE
-      Requerimiento, si quedó cubierto, y **con qué prueba se demuestra** — el nombre del
-      test que lo ejercita, no "sí" a secas.
+      | Etapa | La corre | Dónde | Contra qué |
+      |---|---|---|---|
+      | **Del programador** (`desarrollo`) | vos | la rama del Requerimiento | tu máquina, con datos fijos |
+      | **De QA** (`integracion`) | QA | `dev`, con todo mergeado | el entorno desplegado |
 
-      Los criterios están escritos para la Historia entera, así que van a aparecer algunos
-      que le tocan a otro Requerimiento: nombralos como "de RF-04", no los des por
-      cubiertos ni los ignores.
+      **Las de `desarrollo` las corrés y las dejás en verde.** Son tuyas de punta a punta:
+      aisladas, con el contexto hardcodeado que haga falta (un usuario semilla, un registro
+      fijo, un mock del servicio de al lado). Que dependan de datos fijos no es una
+      trampa — es lo que las hace repetibles en una rama donde todavía no hay nada más.
 
-      | Criterio | ¿Cubierto? | Cómo se prueba |
+      **Las de `integracion` las dejás PREPARADAS, no las corrés.** No podés: en tu rama no
+      hay integración que probar. Preparadas significa con sus pasos escritos, sus datos
+      reales indicados y el resultado esperado claro, de modo que QA las abra y le dé
+      correr. Dejarlas vacías para que QA las redacte es devolverle el trabajo de entender
+      lo que vos ya entendiste.
+
+      Una condición sin Test es una condición que sólo vos podés afirmar, y eso no es una
+      entrega: es una promesa. Si alguna no se puede traducir a pasos HTTP (es de pantalla,
+      o de configuración), cargá el Test igual con los pasos manuales en `description` y
+      `expectedResult` — que QA sepa QUÉ mirar y CÓMO, aunque lo haga a ojo.
+
+   4.2. **Y el script, que es lo que QA no puede escribir por vos.** Un archivo ejecutable
+      en `scrumDocs/entregas/<CODIGO>.sh`, commiteado, que se corra con un comando y sin
+      configurar nada:
+
+      ```bash
+      bash scrumDocs/entregas/RF-03.sh                  # el recorrido completo, integrado
+      bash scrumDocs/entregas/RF-03.sh --carga 200      # el mismo recorrido, 200 veces
+      ```
+
+      Tiene que hacer tres cosas:
+
+      1. **Preparar sus datos y limpiarlos al terminar.** Si deja basura, la segunda
+         corrida da distinto que la primera y nadie sabe si eso es el sistema o el script.
+      2. **Recorrer el flujo completo integrado**, no tu pedazo: si tu Requerimiento es el
+         login, el script registra, entra, hace algo autenticado y sale. Ahí es donde
+         aparece lo que tu rama no podía ver.
+      3. **Aceptar un modo de carga** (`--carga N`): el mismo recorrido repetido, midiendo
+         y reportando. No hace falta una herramienta de estrés — un `for` con `curl` y un
+         promedio alcanza. Lo que importa es el **número**: cuántas corridas, cuántas
+         fallaron, cuánto tardó la más lenta.
+
+      Usá lo que el repo ya tenga (k6, autocannon, pytest, lo que sea) antes de sumar una
+      dependencia. Si el Requerimiento no tiene endpoints, el script comprueba lo que
+      corresponda —que el servicio levanta, que la configuración está aplicada— y lo dice.
+
+      **El script es del programador porque conoce los datos que hacen falta.** QA sabe qué
+      hay que verificar; vos sabés con qué. Escribirlo es lo que convierte tu entrega en
+      algo que otro puede correr.
+
+   5. **Dejá el documento de entrega en el repo**, en el mismo commit. No es "documentación"
+      en abstracto: es lo que QA va a leer para poder probar sin preguntarte nada. Cinco
+      cosas, en `scrumDocs/entregas/<CODIGO>.md` (ej. `scrumDocs/entregas/RF-03.md`):
+
+      1. **Qué quedó implementado**, en una o dos frases, en lenguaje de lo que el sistema
+         ahora hace — no de los archivos que tocaste.
+      2. **Cómo se levanta y cómo se prueba**: los comandos exactos, copiables. Si hace
+         falta una variable de entorno, un servicio o una migración, va acá con su valor de
+         ejemplo.
+      3. **Qué datos hacen falta**: usuario y rol con el que entrar, registros previos,
+         cualquier precondición. Si QA tiene que crear algo antes, decilo con los pasos.
+      4. **Qué endpoints o pantallas toca**, con método y ruta. Es lo que le permite a QA
+         armar sus propios casos además de los tuyos.
+      4.5. **Cómo se corre integrado**: el comando del script del paso 4.2, qué datos deja,
+         y qué tiene que estar levantado para que funcione.
+      5. **Qué quedó afuera y qué se asumió.** Los límites conocidos, lo que se pospuso, la
+         decisión que tomaste cuando el Requerimiento no lo aclaraba. Esto es lo que evita
+         que QA reporte como defecto algo que fue una decisión.
+
+      Si el Requerimiento no tiene código (una No Funcional de política o configuración),
+      este documento **es** la entrega, y el punto 2 pasa a ser cómo se comprueba que la
+      política está aplicada.
+
+   6. **Todo lo que afirmes acá tiene que ser mensurable.** Ni en las condiciones, ni en el
+      documento de entrega, ni en `observations` entran los adjetivos: "rápido", "seguro",
+      "robusto", "optimizado" no son verificables y nadie puede probarlos ni refutarlos.
+      Van con número y unidad, o no van:
+
+      | No sirve | Así sí |
+      |---|---|
+      | "Mejoré la performance" | "El listado pasó de 4,1 s a 380 ms con 10.000 registros" |
+      | "Quedó seguro" | "La contraseña se guarda con bcrypt, costo 12; el endpoint rechaza sin token con 401" |
+      | "Anda bien en móvil" | "Probado en Chrome Android 14 y Safari iOS 17, viewport 390px" |
+
+      Si algo que implementaste no lo podés medir, decilo tal cual —"esto no lo pude
+      medir"— en vez de adjetivarlo. Un límite declarado es información; un adjetivo es
+      ruido que alguien va a tener que verificar de nuevo.
+
+   4.5. **Recorré las condiciones de aprobación, una por una.** Están en el campo
+      `acceptanceCriteria` **del Requerimiento** (`GET
+      $SCRUM_API_URL/api/v1/projects/$PROJECT_ID/requirements`) y son de esta tarjeta, no
+      de la Historia entera: no hay nada que adivinar sobre cuáles te tocan. Armá una tabla
+      corta: cada condición, si quedó cubierta, y **con qué prueba se demuestra** — el
+      nombre del test que la ejercita, no "sí" a secas.
+
+      | Condición de aprobación | ¿Cubierta? | Cómo se prueba |
       |---|---|---|
-      | El usuario no puede registrarse con un email ya usado | sí | `test_registro_email_duplicado` |
-      | La contraseña se guarda hasheada | sí | `test_password_no_plana` |
-      | Se envía el mail de bienvenida | **no, es de RF-05** | — |
+      | El alta rechaza un email ya registrado y lo dice en pantalla | sí | `test_registro_email_duplicado` |
+      | La contraseña se guarda hasheada, nunca en texto plano | sí | `test_password_no_plana` |
+      | Un alta exitosa deja al usuario logueado | **no** | — |
 
-      **Un criterio que te toca y no está cubierto significa que el Requerimiento no está
-      terminado**, aunque la suite esté en verde: la suite prueba lo que escribiste, los
-      criterios dicen lo que había que escribir. Decílo y seguí trabajando, no lo cierres.
+      **Una condición sin cubrir significa que el Requerimiento NO está terminado**, aunque
+      la suite esté en verde: la suite prueba lo que escribiste, las condiciones dicen lo
+      que había que escribir. Decílo y seguí trabajando, no lo cierres.
 
-      Si la Historia no tiene criterios cargados, decilo explícitamente — no los inventes
-      para poder cerrar. Es un pedido para el Product Owner y queda en el resumen.
+      Si el Requerimiento **no tiene condiciones cargadas**, decilo y pará antes de cerrar:
+      sin ellas "listo" es una opinión tuya, y quien revisa no tiene contra qué comparar.
+      Las escriben el Project Manager o el Scrum Master — a vos la API te contesta 403.
+      Ofrecé redactar una propuesta a partir de lo que implementaste para que ellos la
+      visen: **proponerlas no es cargarlas**, y menos aún darlas por cumplidas.
+
+      Si alguna condición resultó imposible, o quedó mal planteada, tampoco la edites: eso
+      se habla. Nombrala en el resumen con lo que encontraste.
 
    5. **Preguntale al usuario si lo damos por terminado, y esperá la respuesta.** Con la
-      suite corrida y la tabla de criterios armada, mostrale las dos cosas y pedí la
+      suite corrida y la tabla de condiciones armada, mostrale las dos cosas y pedí la
       confirmación en una sola pregunta:
 
-      > Corrí las pruebas de `<Requerimiento>`: **N pasaron, M fallaron**. De los criterios
-      > de aceptación que le tocan, **quedaron cubiertos N de N** (arriba está cuál con
-      > cuál). Implementé `<qué>` y documenté `<dónde>`. ¿Está todo bien? Si me decís que
+      > Corrí las pruebas de `<Requerimiento>`: **N pasaron, M fallaron**. De sus
+      > condiciones de aprobación, **quedaron cubiertas N de N** (arriba está cuál con
+      > cuál). Dejé las pruebas del programador en verde y las de integración preparadas
+      > para QA, más el script `scrumDocs/entregas/<CODIGO>.sh`. Implementé `<qué>` y la
+      > entrega quedó en `scrumDocs/entregas/<CODIGO>.md`. ¿Está todo bien? Si me decís que
       > sí, abro el Pull Request y paso la tarjeta a **Hecho**, que **corta el reloj**
       > (ahora lleva `<Xh Ym>` y deja de contar).
 
@@ -762,9 +854,20 @@ una sola vez y no se reinicia.
   sobre la validación, no sobre el orden: cuál encarar después lo elige el usuario, y
   adelantarse a un Requerimiento posterior porque el anterior está trabado es una decisión
   razonable que vos mismo podés proponer.
-- **Nunca cierres un Requerimiento con un criterio de aceptación que te toca sin cubrir**
+- **Nunca cierres un Requerimiento con una condición de aprobación sin cubrir**
   (paso 5.6.4.5), por más que la suite esté en verde: la suite prueba lo que escribiste,
-  los criterios dicen lo que había que escribir.
+  las condiciones dicen lo que había que escribir.
+- **Nunca corras vos los Tests de etapa `integracion`** ni los marques Aprobados: en tu
+  rama no hay integración que probar, así que un verde ahí es una afirmación sin respaldo.
+  Los preparás; los corre QA sobre `dev`.
+- **Nunca entregues sin el documento de entrega, sin los Tests cargados ni sin el script**
+  (pasos 5.6.4, 5.6.4.2 y 5.6.5). Son lo que QA necesita para probar sin preguntarte: sin eso, la validación no es
+  una etapa del proceso sino una conversación, y la conversación no queda en ningún lado.
+- **Nunca uses un adjetivo donde va un número** (paso 5.6.6). "Rápido" no se puede probar
+  ni refutar; "380 ms con 10.000 registros" sí.
+- **Nunca escribas ni edites `acceptanceCriteria`**: son de quien define el alcance (PM y
+  Scrum Master), y la API te contesta 403. Proponerlas cuando faltan, sí; darlas por
+  cumplidas o corregirlas para que cierren, no -- eso es moverse el arco.
 - Nunca inventar una Historia de Usuario para colgar un Requerimiento nuevo -- si no hay
   ninguna razonable, avisar y no crear el Requerimiento suelto.
 - Nunca marcar `isAutoGenerated`/crear un Test sin evidencia real de que existe en el
