@@ -71,6 +71,7 @@ LOCAL_APPS = [
     'apps.core.apps.CoreConfig',         # App base de bienvenida y utilidades globales
     'apps.manual.apps.ManualConfig',     # App didáctica del Manual del Alumno
     'apps.usuarios.apps.UsuariosConfig', # App de autenticación y gestión de usuarios
+    'apps.datos.apps.DatosConfig',       # App de modelos de datos y catálogo optimizado
 ]
 
 # Switch didáctico: Si la app de manual está activa, la exponemos
