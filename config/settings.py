@@ -72,6 +72,7 @@ LOCAL_APPS = [
     'apps.manual.apps.ManualConfig',     # App didáctica del Manual del Alumno
     'apps.usuarios.apps.UsuariosConfig', # App de autenticación y gestión de usuarios
     'apps.datos.apps.DatosConfig',       # App de modelos de datos y catálogo optimizado
+    'apps.ia.apps.IaConfig',             # App de Inteligencia Artificial (Claude API & Tool Calling)
 ]
 
 # Switch didáctico: Si la app de manual está activa, la exponemos
