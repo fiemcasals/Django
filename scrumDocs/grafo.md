@@ -1,6 +1,6 @@
 # Grafo de Dependencias -- django
 
-_Generado automaticamente el 2026-09-24T17:54:31.651Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-24T17:54:49.396Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ```mermaid
 graph TD
@@ -28,4 +28,5 @@ graph TD
   REQ_1790271633298 --> REQ_1790272080655
   REQ_1790271231287 --> REQ_1790272254524
   REQ_1790272254524 --> REQ_1790272349467
+  REQ_1790272254524 --> REQ_1790272467589
 ```
