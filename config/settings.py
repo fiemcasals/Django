@@ -273,3 +273,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # 12. CONFIGURACIÓN DE IA (ANTHROPIC CLAUDE)
 # ------------------------------------------------------------------------------
 ANTHROPIC_API_KEY = env('ANTHROPIC_API_KEY', default='')
+CLAUDE_MODEL = env('CLAUDE_MODEL', default='claude-3-5-haiku-20241022')
+MONTHLY_TOKEN_LIMIT = env.int('MONTHLY_TOKEN_LIMIT', default=500000)
+MONTHLY_BUDGET_USD = env.float('MONTHLY_BUDGET_USD', default=5.00)

@@ -144,17 +144,19 @@ class ClaudeService:
     def __init__(
         self,
         api_key: Optional[str] = None,
-        model: str = "claude-3-5-haiku-20241022"
+        model: Optional[str] = None
     ):
         """
-        Inicializa el cliente de Anthropic con la API key provista o desde settings.
+        Inicializa el cliente de Anthropic con la API key y modelo provistos o desde settings.
         """
         if api_key is not None:
             self.api_key = api_key
         else:
             self.api_key = getattr(settings, 'ANTHROPIC_API_KEY', '')
 
-        self.model = model
+        self.model = model or getattr(settings, 'CLAUDE_MODEL', 'claude-3-5-haiku-20241022')
+        self.monthly_token_limit = getattr(settings, 'MONTHLY_TOKEN_LIMIT', 500000)
+        self.monthly_budget_usd = getattr(settings, 'MONTHLY_BUDGET_USD', 5.00)
         self.client = None
 
         if ANTHROPIC_AVAILABLE and self.api_key:
