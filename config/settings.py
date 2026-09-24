@@ -69,13 +69,11 @@ DJANGO_APPS = [
 
 LOCAL_APPS = [
     'apps.core.apps.CoreConfig',     # App base de bienvenida y utilidades globales
+    'apps.manual.apps.ManualConfig', # App didáctica del Manual del Alumno
 ]
 
-# Switch didáctico: Si la app de manual está activa, la registramos
+# Switch didáctico: Si la app de manual está activa, la exponemos
 ENABLE_STUDENT_MANUAL = env('ENABLE_STUDENT_MANUAL', default=True)
-if ENABLE_STUDENT_MANUAL:
-    # Podrá ser incorporada en apps/manual/ en HU-02
-    pass
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
 

@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}{{ titulo_pagina }}{% endblock %}
+
+{% block content %}
+<div class="manual-container">
+    <div class="breadcrumb">
+        <a href="{% url 'manual:index' %}">&larr; Volver al Índice del Manual</a>
+    </div>
+
+    <div class="manual-header">
+        <span class="badge badge-info">📐 Arquitectura</span>
+        <h1 class="page-title">Patrón MVT y Ciclo de Vida de una Petición en Django</h1>
+        <p class="page-subtitle">
+            Django implementa una variación del clásico patrón MVC (Model-View-Controller) llamada <strong>MVT (Model-View-Template)</strong>.
+        </p>
+    </div>
+
+    <!-- Diagrama del Flujo -->
+    <div class="card architecture-flow-card">
+        <h3>🔄 Ciclo de Vida: De la URL a la Pantalla</h3>
+        <div class="flow-steps-grid">
+            <div class="flow-step">
+                <div class="step-num">1</div>
+                <div class="step-title">Navegador (Request)</div>
+                <div class="step-desc">El usuario visita <code>/manual/</code> en su navegador emitiendo una petición HTTP GET.</div>
+            </div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">
+                <div class="step-num">2</div>
+                <div class="step-title">Middlewares</div>
+                <div class="step-desc">Capas de seguridad, sesión y autenticación procesan la petición antes de enrutarla.</div>
+            </div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">
+                <div class="step-num">3</div>
+                <div class="step-title">URL Resolver (urls.py)</div>
+                <div class="step-desc">Compara la ruta solicitada con los patrones de URLs y deriva a la vista correspondiente.</div>
+            </div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">
+                <div class="step-num">4</div>
+                <div class="step-title">Vista (views.py)</div>
+                <div class="step-desc">Ejecuta la lógica de negocio, consulta el Modelo (ORM) y prepara el contexto.</div>
+            </div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">
+                <div class="step-num">5</div>
+                <div class="step-title">Template (HTML)</div>
+                <div class="step-desc">El motor DTL renderiza el HTML combinando variables de contexto y responde con HTTP 200.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Los 3 Pilares del MVT -->
+    <div class="mvt-pillars-grid">
+        <div class="card pilar-card">
+            <div class="pilar-header">
+                <span class="pilar-letter">M</span>
+                <h3>Modelo (models.py)</h3>
+            </div>
+            <p><strong>Capa de Datos y Persistencia (ORM).</strong></p>
+            <p>Define las tablas de la base de datos usando clases de Python. Django traduce automáticamente las consultas de Python (ej. <code>Mensaje.objects.filter(activo=True)</code>) a sentencias SQL seguras contra inyección SQL.</p>
+            <div class="code-badge">Archivo: apps/*/models.py</div>
+        </div>
+
+        <div class="card pilar-card">
+            <div class="pilar-header">
+                <span class="pilar-letter">V</span>
+                <h3>Vista (views.py)</h3>
+            </div>
+            <p><strong>Capa de Lógica y Control.</strong></p>
+            <p>Es la función o clase que procesa el <code>request</code>, aplica reglas de negocio, valida formularios, interactúa con el Modelo y decide qué respuesta devolver (HTML, JSON o Redirección).</p>
+            <div class="code-badge">Archivo: apps/*/views.py</div>
+        </div>
+
+        <div class="card pilar-card">
+            <div class="pilar-header">
+                <span class="pilar-letter">T</span>
+                <h3>Template (.html)</h3>
+            </div>
+            <p><strong>Capa de Presentación e Interfaz de Usuario.</strong></p>
+            <p>Archivos HTML enriquecidos con el lenguaje de plantillas de Django (DTL). Permite herencia de plantillas ({% verbatim %}<code>{% extends "base.html" %}</code>{% endverbatim %}), bucles ({% verbatim %}<code>{% for item in lista %}</code>{% endverbatim %}) e inserción de variables ({% verbatim %}<code>{{ variable }}</code>{% endverbatim %}).</p>
+            <div class="code-badge">Archivo: templates/*.html</div>
+        </div>
+    </div>
+
+    <!-- Sección de Modularidad -->
+    <div id="modularidad" class="card modularity-card">
+        <h3>🧩 ¿Por qué organizamos el código en <code>apps/</code>?</h3>
+        <p>Una <strong>App</strong> en Django es un paquete autónomo que resuelve un dominio funcional específico (por ejemplo: <code>apps/core</code>, <code>apps/manual</code>, <code>apps/usuarios</code>, <code>apps/datos</code>, <code>apps/ia</code>).</p>
+        <ul>
+            <li><strong>Desacoplamiento:</strong> Cada app contiene sus propios modelos, vistas, urls, formularios y tests.</li>
+            <li><strong>Mantenibilidad:</strong> Si necesitas remover una funcionalidad o cambiar su comportamiento, podés hacerlo sin afectar al resto del sistema.</li>
+            <li><strong>Reutilización:</strong> Podés exportar una app a otro proyecto Django con mínimo esfuerzo.</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
