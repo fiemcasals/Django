@@ -1,0 +1,23 @@
+# ==============================================================================
+# requirements.txt - Dependencias de Python del proyecto
+# ==============================================================================
+# Explicación para alumnos:
+# Este archivo lista las librerías externas que necesita el proyecto para funcionar.
+# Se instalan ejecutando: pip install -r requirements.txt
+# ==============================================================================
+
+# Framework Web principal
+Django>=5.0,<5.2
+
+# Manejo seguro de variables de entorno desde el archivo .env
+django-environ>=0.11.2
+python-dotenv>=1.0.1
+
+# Adaptador de base de datos para PostgreSQL
+psycopg2-binary>=2.9.9
+
+# Cliente oficial de Anthropic para interacción con Claude (IA)
+anthropic>=0.20.0
+
+# Servidor WSGI para despliegue y producción (opcional en desarrollo local)
+gunicorn>=21.2.0

@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!--
+    ==========================================================================
+    templates/base.html - Plantilla Maestra (Layout Global)
+    ==========================================================================
+    Explicación para alumnos:
+    En Django usamos el concepto de 'Herencia de Plantillas' para no repetir
+    código HTML común (como el <head>, la barra de navegación y el footer).
+    
+    Etiquetas clave del motor de plantillas de Django (DTL):
+    1. '{% load static %}': Habilita la carga de archivos CSS, JS e imágenes estáticas.
+    2. '{% block nombre_bloque %}...{% endblock %}': Define secciones que las páginas hijas
+       pueden sobreescribir con su propio contenido específico.
+    3. '{{ variable }}': Imprime el valor de una variable enviada desde la vista.
+    ==========================================================================
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Plantilla base didáctica de Django 5.x modular y documentada para clases.">
+    <title>{% block title %}{{ APP_NAME }}{% endblock %}</title>
+    
+    <!-- Tipografía moderna desde Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Hoja de estilos CSS propia del proyecto -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <!-- 1. Barra de Navegación Principal -->
+    <header class="navbar">
+        <div class="container navbar-container">
+            <a href="{% url 'core:home' %}" class="navbar-brand">
+                <span class="brand-badge">Django 5</span>
+                <strong>{{ APP_NAME }}</strong>
+            </a>
+            
+            <nav class="navbar-nav">
+                <a href="{% url 'core:home' %}" class="nav-link">Inicio</a>
+                
+                <!-- Sección didáctica: se muestra solo si ENABLE_STUDENT_MANUAL es True -->
+                {% if ENABLE_STUDENT_MANUAL %}
+                    <a href="#manual" class="nav-link nav-badge">Manual Alumno</a>
+                {% endif %}
+                
+                <!-- Sección de autenticación (se completará dinámicamente en HU-03) -->
+                {% if user.is_authenticated %}
+                    <span class="user-greeting">Hola, <strong>{{ user.username }}</strong></span>
+                    <a href="#logout" class="btn btn-sm btn-outline">Salir</a>
+                {% else %}
+                    <a href="#login" class="btn btn-sm btn-primary">Ingresar</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <!-- 2. Contenedor de Mensajes Flash de Django (Messages Framework) -->
+    {% if messages %}
+    <div class="container messages-container">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                <span>{{ message }}</span>
+                <button type="button" class="alert-close" onclick="this.parentElement.remove();">&times;</button>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- 3. Bloque de Contenido Principal (Sobreescrito por cada template hijo) -->
+    <main class="main-content">
+        {% block content %}
+        <!-- El contenido de cada vista se inyectará acá -->
+        {% endblock %}
+    </main>
+
+    <!-- 4. Pie de Página Común (Footer) -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <p>&copy; 2026 - {{ APP_NAME }} &bull; Arquitectura modular para fines pedagógicos.</p>
+            <p class="text-muted"><small>Python 3.12 &bull; Django 5.x &bull; PostgreSQL 16 &bull; Docker</small></p>
+        </div>
+    </footer>
+
+    <!-- Scripts JavaScript -->
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

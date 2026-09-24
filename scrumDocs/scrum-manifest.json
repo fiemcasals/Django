@@ -1,0 +1,60 @@
+{
+  "projectId": "PROJ-1790258465125",
+  "lastSyncAt": "2026-09-24T17:55:50.000Z",
+  "mappings": [
+    {
+      "requirementId": "REQ-1790271231287",
+      "userStoryId": "US-1790269951533",
+      "code": "RF-01",
+      "sourceRef": "scrumDocs/REQUERIMIENTOS.md#RF-01: Configuración central y estructura modular de aplicaciones Django"
+    },
+    {
+      "requirementId": "REQ-1790271332189",
+      "userStoryId": "US-1790269951533",
+      "code": "RNF-01",
+      "sourceRef": "scrumDocs/REQUERIMIENTOS.md#RNF-01: Contenerización del entorno con Docker, docker-compose y PostgreSQL"
+    },
+    {
+      "requirementId": "REQ-1790271443931",
+      "userStoryId": "US-1790270031919",
+      "code": "RF-02",
+      "sourceRef": "scrumDocs/REQUERIMIENTOS.md#Módulo interactivo de Guía/Manual del Alumno con switch de activación"
+    },
+    {
+      "requirementId": "REQ-1790271633298",
+      "userStoryId": "US-1790270167277",
+      "code": "RF-03",
+      "sourceRef": "scrumDocs/REQUERIMIENTOS.md#Sistema de inicio, cierre de sesión y control de acceso"
+    },
+    {
+      "requirementId": "REQ-1790272080655",
+      "userStoryId": "US-1790270167277",
+      "code": "RF-04",
+      "sourceRef": "scrumDocs/REQUERIMIENTOS.md#Circuito de restablecimiento y cambio de contraseña con emisor de consola"
+    },
+    {
+      "requirementId": "REQ-1790272254524",
+      "userStoryId": "US-1790270297472",
+      "code": "RF-05",
+      "sourceRef": "scrumDocs/REQUERIMIENTOS.md#Modelos de datos con indexación y métodos de extracción de catálogo/índice"
+    },
+    {
+      "requirementId": "REQ-1790272349467",
+      "userStoryId": "US-1790270297472",
+      "code": "RF-06",
+      "sourceRef": "scrumDocs/REQUERIMIENTOS.md#Interfaz Web CRUD para gestión de datos con validaciones"
+    },
+    {
+      "requirementId": "REQ-1790272467589",
+      "userStoryId": "US-1790270414974",
+      "code": "RF-07",
+      "sourceRef": "scrumDocs/REQUERIMIENTOS.md#Servicio de IA con Anthropic SDK, Tool Calling en dos pasos y optimización de tokens"
+    },
+    {
+      "requirementId": "REQ-1790272536899",
+      "userStoryId": "US-1790270414974",
+      "code": "RF-08",
+      "sourceRef": "scrumDocs/REQUERIMIENTOS.md#Interfaz Web y Chat Didáctico para consultas con visualización del flujo de IA"
+    }
+  ]
+}

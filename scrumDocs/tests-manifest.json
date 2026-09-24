@@ -1,0 +1,65 @@
+{
+  "tests": [
+    {
+      "requirementCode": "RF-01",
+      "testId": "TEST-1790274186485",
+      "title": "Página de inicio responde HTTP 200 y renderiza base.html",
+      "type": "Integración",
+      "preconditions": "Servidor Django en ejecución",
+      "description": "Verifica que al realizar una petición GET a la ruta raíz '/', Django responda con código HTTP 200, herede de base.html y renderice el contenido de core/index.html.",
+      "expectedResult": "Código HTTP 200 y renderizado exitoso de la plantilla base.",
+      "steps": [
+        {
+          "name": "inicio",
+          "method": "GET",
+          "url": "{{baseUrl}}/",
+          "expectedStatus": 200
+        }
+      ]
+    },
+    {
+      "requirementCode": "RF-01",
+      "testId": "TEST-1790274196992",
+      "title": "Endpoint de salud /salud/ responde status: ok",
+      "type": "Unitario",
+      "preconditions": "Ruta /salud/ registrada en core.urls",
+      "description": "Verifica que el endpoint de comprobación de estado /salud/ retorne JSON con status: ok.",
+      "expectedResult": "Código HTTP 200 y JSON con {'status': 'ok'}.",
+      "steps": [
+        {
+          "name": "healthcheck",
+          "method": "GET",
+          "url": "{{baseUrl}}/salud/",
+          "expectedStatus": 200
+        }
+      ]
+    },
+    {
+      "requirementCode": "RF-01",
+      "testId": "TEST-1790274207511",
+      "title": "Persistencia del modelo MensajeBienvenida y método __str__",
+      "type": "Unitario",
+      "preconditions": "Migraciones de base de datos aplicadas",
+      "description": "Crea un registro del modelo MensajeBienvenida en base de datos y valida su representación en texto y persistencia.",
+      "expectedResult": "Registro persistido en base de datos y __str__ devuelve 'Título (Activo)'."
+    },
+    {
+      "requirementCode": "RF-01",
+      "testId": "TEST-1790274221965",
+      "title": "Validación de formulario MensajeBienvenidaForm con datos válidos",
+      "type": "Unitario",
+      "preconditions": "Formulario MensajeBienvenidaForm importado",
+      "description": "Valida que el formulario acepte un diccionario con título mayor a 3 caracteres y contenido correcto.",
+      "expectedResult": "form.is_valid() retorna True sin errores."
+    },
+    {
+      "requirementCode": "RF-01",
+      "testId": "TEST-1790274232955",
+      "title": "Rechazo de formulario por validación clean_titulo (longitud < 3)",
+      "type": "Unitario",
+      "preconditions": "Formulario MensajeBienvenidaForm con título corto",
+      "description": "Valida que la regla de validación clean_titulo() rechace títulos de menos de 3 caracteres.",
+      "expectedResult": "form.is_valid() retorna False y form.errors contiene 'titulo'."
+    }
+  ]
+}
