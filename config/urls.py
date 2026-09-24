@@ -30,6 +30,9 @@ urlpatterns = [
     # Módulo de Autenticación y Gestión de Usuarios (/usuarios/)
     path('usuarios/', include('apps.usuarios.urls', namespace='usuarios')),
 
+    # Módulo de Datos y Catálogo (/datos/)
+    path('datos/', include('apps.datos.urls', namespace='datos')),
+
     # Atajos de rutas directas para Login y Logout
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', logout_view, name='logout'),
