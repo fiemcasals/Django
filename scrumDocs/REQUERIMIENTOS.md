@@ -1,6 +1,6 @@
 # Requerimientos -- django
 
-_Generado automaticamente el 2026-09-24T17:51:11.156Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-24T17:52:31.688Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ## HU-01: Arquitectura base modular y entorno Dockerizado con documentación didáctica
 
@@ -53,6 +53,14 @@ _Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scr
 ### RF-01: Modelos de datos con indexación y métodos de extracción de catálogo/índice (Funcional)
 
 Crear la aplicación apps/datos/ con un modelo representativo (Item/Recurso) que incluya campos de texto, fecha, categoría y claves indexadas en PostgreSQL (db_index=True, Meta.indexes). Implementar en el modelo o manager el método obtener_catalogo_indice() que extraiga únicamente los metadatos livianos (ID, título, categoría) para optimización de tokens, y los métodos de búsqueda parametrizados. Entregables: apps/datos/ (apps.py, models.py, services.py), apps/datos/tests/test_models.py. Suite de tests obligatoria: crear registro persiste, obtener_catalogo_indice liviano, buscar por texto y filtrar por categoría. Aprobación: python manage.py test apps.datos.tests.test_models OK (4 tests pasados).
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
+### RF-02: Interfaz Web CRUD para gestión de datos con validaciones (Funcional)
+
+Implementar formularios (ModelForm) con validaciones y vistas protegidas con @login_required para el ciclo CRUD completo (Listar, Detalle, Crear, Editar, Eliminar) del modelo Item/Recurso. Renderizar plantillas HTML claras con mensajes de feedback. Entregables: apps/datos/ (forms.py, views.py, urls.py), templates/datos/ (lista.html, detalle.html, form.html, confirmar_eliminar.html), apps/datos/tests/test_views.py. Suite de tests obligatoria: listar responde 200, crear form válido persiste, crear form inválido muestra errores, editar actualiza y eliminar borra. Aprobación: python manage.py test apps.datos.tests.test_views OK (5 tests pasados).
 
 **Condiciones de aprobación**
 
