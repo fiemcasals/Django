@@ -1,6 +1,6 @@
 # QA — qué podés hacer en este proyecto
 
-_Generado automáticamente el 2026-09-24T16:46:16.117Z -- no editar a mano, se sobreescribe en cada publicación._
+_Generado automáticamente el 2026-09-24T19:11:23.845Z -- no editar a mano, se sobreescribe en cada publicación._
 
 Este es el documento de **tu** rol. El procedimiento paso a paso está en
 `.claude/skills/qa-sync/SKILL.md`.
@@ -36,6 +36,34 @@ que lo haga. Lo que no se adelanta es el sello: mientras su dependencia no esté
 lo que pruebes de él vale hasta ahí, y así hay que decirlo. Las `preconditions` de cada test **nombran el
 Requerimiento del que dependen, por código** — "RF-01 (registro) probado y en verde", no
 "usuario autenticado".
+
+## Las tuyas son las de integración
+
+Cada Requerimiento tiene dos juegos de pruebas. Las de **`desarrollo`** las corrió el
+programador en su rama, aislado y con datos fijos: ya probaron lo que podían probar y no
+hace falta repetirlas. Las de **`integracion`** son tuyas, sobre `dev` y con todo mergeado
+— ahí aparece lo que la rama aislada no podía ver: dos Requerimientos escribiendo sobre la
+misma tabla, un orden de migraciones que importa, el servicio de al lado devolviendo algo
+distinto de lo que el mock devolvía.
+
+## Lo que tenés derecho a recibir
+
+Un Requerimiento entregado trae tres cosas: el documento `scrumDocs/entregas/<CODIGO>.md`,
+el script `scrumDocs/entregas/<CODIGO>.sh` —que recorre el flujo integrado y con `--carga N`
+lo repite midiendo— y **sus Tests de integración ya preparados**, con pasos y datos, listos
+para que les des correr. La vara del developer es que vos puedas probar sin preguntarle
+nada.
+
+Si falta, no lo suplas en silencio: nombralo. Una entrega que sólo se puede validar
+conversando es una entrega incompleta, y esa conversación no queda registrada para el
+próximo.
+
+## De dónde salen los Tests
+
+De las **condiciones de aprobación** del Requerimiento (`acceptanceCriteria`), no de tu
+criterio sobre qué conviene probar. Una condición, al menos un Test. Si alguna no se puede
+traducir a un Test, está mal escrita o lo que describe todavía no existe — las dos cosas se
+dicen, no se saltean.
 
 ## Qué escribís del Requerimiento
 
