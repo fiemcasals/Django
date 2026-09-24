@@ -1,6 +1,6 @@
 # Grafo de Dependencias -- django
 
-_Generado automaticamente el 2026-09-24T17:37:27.538Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-24T17:37:37.778Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ```mermaid
 graph TD
@@ -12,4 +12,5 @@ graph TD
     REQ_1790271443931["RF-01: Módulo interactivo de Guía/Manual del Alumno con switch de activación"]
   end
   REQ_1790271231287 --> REQ_1790271332189
+  REQ_1790271231287 --> REQ_1790271443931
 ```
