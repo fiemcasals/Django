@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Catálogo de Ítems - {{ APP_NAME }}{% endblock %}
+
+{% block content %}
+<div class="catalog-container">
+    <div class="catalog-header">
+        <div>
+            <span class="badge badge-info">📦 Base de Datos</span>
+            <h1 class="page-title">Catálogo de Ítems / Recursos</h1>
+            <p class="page-subtitle">Explora los recursos indexados en PostgreSQL con optimización para consultas y análisis de IA.</p>
+        </div>
+        <div>
+            {% if user.is_authenticated %}
+                <a href="{% url 'datos:crear' %}" class="btn btn-primary">+ Nuevo Ítem</a>
+            {% else %}
+                <a href="{% url 'usuarios:login' %}?next={% url 'datos:crear' %}" class="btn btn-outline">Ingresá para crear</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Barra de búsqueda y filtros -->
+    <div class="card filter-card">
+        <form method="get" class="filter-form">
+            <div class="filter-inputs">
+                <input type="text" name="q" value="{{ q }}" placeholder="Buscar por título o descripción..." class="form-input">
+                <select name="categoria" class="form-input">
+                    <option value="">Todas las categorías</option>
+                    {% for cat in categorias_disponibles %}
+                        <option value="{{ cat }}" {% if categoria_filtro == cat %}selected{% endif %}>{{ cat }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-secondary">Filtrar</button>
+                {% if q or categoria_filtro %}
+                    <a href="{% url 'datos:lista' %}" class="btn btn-outline">Limpiar</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+    <!-- Listado de Ítems -->
+    {% if items %}
+        <div class="items-grid">
+            {% for item in items %}
+                <div class="card item-card">
+                    <div class="item-card-header">
+                        <span class="badge badge-success">{{ item.categoria }}</span>
+                        <span class="item-price">${{ item.precio }}</span>
+                    </div>
+                    <h3 class="item-title"><a href="{% url 'datos:detalle' item.pk %}">{{ item.titulo }}</a></h3>
+                    <p class="item-desc">{{ item.descripcion|truncatewords:20 }}</p>
+                    <div class="item-card-footer">
+                        <span class="item-date">{{ item.fecha_creacion|date:"d/m/Y" }}</span>
+                        <div class="item-actions">
+                            <a href="{% url 'datos:detalle' item.pk %}" class="btn btn-sm btn-outline">Detalle</a>
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'datos:editar' item.pk %}" class="btn btn-sm btn-secondary">Editar</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card empty-state" style="text-align: center; padding: 3rem 1rem;">
+            <p style="font-size: 1.2rem; color: var(--text-muted);">No se encontraron ítems que coincidan con la búsqueda.</p>
+            {% if user.is_authenticated %}
+                <a href="{% url 'datos:crear' %}" class="btn btn-primary" style="margin-top: 1rem;">Crear el primer ítem</a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

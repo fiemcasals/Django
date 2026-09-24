@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}{{ item.titulo }} - {{ APP_NAME }}{% endblock %}
+
+{% block content %}
+<div class="item-detail-container">
+    <div class="breadcrumb">
+        <a href="{% url 'datos:lista' %}">&larr; Volver al Catálogo</a>
+    </div>
+
+    <div class="card item-detail-card">
+        <div class="item-detail-header">
+            <div>
+                <span class="badge badge-success">{{ item.categoria }}</span>
+                <h1>{{ item.titulo }}</h1>
+                <span class="item-date">Publicado el {{ item.fecha_creacion|date:"d/m/Y H:i" }}</span>
+            </div>
+            <div class="item-detail-price">
+                <span class="price-val">${{ item.precio }}</span>
+            </div>
+        </div>
+
+        <div class="item-detail-body">
+            <h3>Descripción del Recurso</h3>
+            <p>{{ item.descripcion|linebreaks }}</p>
+        </div>
+
+        <div class="item-detail-footer">
+            <a href="{% url 'datos:lista' %}" class="btn btn-outline">&larr; Volver</a>
+            {% if user.is_authenticated %}
+                <div class="item-manage-btns">
+                    <a href="{% url 'datos:editar' item.pk %}" class="btn btn-secondary">Editar</a>
+                    <a href="{% url 'datos:eliminar' item.pk %}" class="btn btn-danger">Eliminar</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

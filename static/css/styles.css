@@ -492,7 +492,13 @@ code, pre {
     font-weight: 600;
     font-size: 0.9rem;
     border: none;
-=======
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
+}
 /* 7. Manual del Alumno (Apps Manual) */
 .manual-container {
     max-width: 1000px;
@@ -742,8 +748,132 @@ code, pre {
     color: var(--text-muted);
 }
 
-/* 8. Footer */
->>>>>>> origin/dev
+/* 10. Módulo de Catálogo y Datos (CRUD) */
+.catalog-container, .item-detail-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.catalog-header, .item-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.filter-card {
+    padding: 1.25rem;
+    background-color: #ffffff;
+}
+
+.filter-inputs {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filter-inputs .form-input {
+    flex: 1;
+    min-width: 200px;
+}
+
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.item-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.item-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-price {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--primary);
+}
+
+.item-title a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.item-title a:hover {
+    color: var(--primary);
+}
+
+.item-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+.item-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.75rem;
+}
+
+.item-date {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.item-actions, .item-manage-btns {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.item-detail-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2.5rem;
+}
+
+.item-detail-price .price-val {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.item-detail-body h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+}
+
+.item-detail-body p {
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+.item-detail-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.5rem;
+}
+
+/* 11. Footer */
 .footer {
     background-color: #ffffff;
     border-top: 1px solid var(--border-color);

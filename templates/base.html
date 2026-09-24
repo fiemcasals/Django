@@ -44,6 +44,7 @@
             
             <nav class="navbar-nav">
                 <a href="{% url 'core:home' %}" class="nav-link">Inicio</a>
+                <a href="{% url 'datos:lista' %}" class="nav-link">Catálogo</a>
                 
                 <!-- Sección didáctica: se muestra solo si ENABLE_STUDENT_MANUAL es True -->
                 {% if ENABLE_STUDENT_MANUAL %}
