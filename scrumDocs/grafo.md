@@ -1,6 +1,6 @@
 # Grafo de Dependencias -- django
 
-_Generado automaticamente el 2026-09-24T17:52:49.077Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-24T17:54:31.651Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ```mermaid
 graph TD
@@ -18,6 +18,9 @@ graph TD
   subgraph US_1790270297472["HU-04: CRUD de información didáctico con indexación en base de datos PostgreSQL"]
     REQ_1790272254524["RF-01: Modelos de datos con indexación y métodos de extracción de catálogo/índice"]
     REQ_1790272349467["RF-02: Interfaz Web CRUD para gestión de datos con validaciones"]
+  end
+  subgraph US_1790270414974["HU-05: Consulta inteligente a base de datos asistida por IA (Anthropic API con optimización estricta de tokens)"]
+    REQ_1790272467589["RF-01: Servicio de IA con Anthropic SDK, Tool Calling en dos pasos y optimización de tokens"]
   end
   REQ_1790271231287 --> REQ_1790271332189
   REQ_1790271231287 --> REQ_1790271443931
