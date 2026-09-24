@@ -1,6 +1,6 @@
 # Scrum Master — qué podés hacer en este proyecto
 
-_Generado automáticamente el 2026-09-24T16:46:12.422Z -- no editar a mano, se sobreescribe en cada publicación._
+_Generado automáticamente el 2026-09-24T19:11:20.337Z -- no editar a mano, se sobreescribe en cada publicación._
 
 Este es el documento de **tu** rol. El procedimiento paso a paso está en
 `.claude/skills/sm-sync/SKILL.md`.
@@ -32,6 +32,13 @@ hoy.
 Un Requerimiento sin dependencias es una afirmación —"éste se puede empezar hoy"—, no un
 campo vacío.
 
+**Y con sus condiciones de aprobación.** `acceptanceCriteria` dice qué tiene que ser verdad
+para dar ESA tarjeta por terminada — no la Historia entera, la tarjeta. El programador las
+recorre una por una antes de pedir el merge y QA arma sus Tests a partir de ahí, así que una
+condición que no se pueda verificar mirando el sistema todavía no está terminada de
+escribir. Si no las podés escribir, el Requerimiento no está listo para crearse: o falta
+entender qué se pidió, o es demasiado grande y hay que partirlo.
+
 **Y la fragmentación es tuya.** Una Historia cuyo desglose es un solo Requerimiento que
 hace todo no está desglosada: no se puede repartir, ni estimar, ni probar por partes. Si
 un Requerimiento no se puede probar solo, o falta una dependencia o falta partirlo.
@@ -40,7 +47,7 @@ un Requerimiento no se puede probar solo, o falta una dependencia o falta partir
 
 **Campos que podés escribir** con `PATCH /api/v1/requirements/[id]`:
 
-`assignee` · `status` · `deliveryId` · `userStoryId` · `integrantes` · `mostrarAlSocio` · `estimated` · `dependencies` · `start` · `end` · `progress`
+`assignee` · `status` · `deliveryId` · `userStoryId` · `integrantes` · `mostrarAlSocio` · `acceptanceCriteria` · `estimated` · `dependencies` · `start` · `end` · `progress`
 
 **Estados que podés fijar a mano**: `to_do` · `doing` · `pr_open`.
 
