@@ -1,6 +1,6 @@
 # QA — qué podés hacer en este proyecto
 
-_Generado automáticamente el 2026-09-24T19:25:45.740Z -- no editar a mano, se sobreescribe en cada publicación._
+_Generado automáticamente el 2026-09-24T19:42:35.013Z -- no editar a mano, se sobreescribe en cada publicación._
 
 Este es el documento de **tu** rol. El procedimiento paso a paso está en
 `.claude/skills/qa-sync/SKILL.md`.
