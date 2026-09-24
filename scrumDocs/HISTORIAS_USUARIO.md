@@ -1,6 +1,6 @@
 # Historias de Usuario -- django
 
-_Generado automaticamente el 2026-09-24T17:13:53.234Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-24T17:16:08.610Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ## HU-01: Arquitectura base modular y entorno Dockerizado con documentación didáctica
 
@@ -33,3 +33,20 @@ Como alumno o docente que utiliza la plantilla, quiero disponer de una sección 
 ### Detalle Tecnico y Reglas de Negocio
 
 App desacoplada en apps/manual/. Inclusión condicional de URLs en config/urls.py según configuración en settings.py. Context processor o middleware liviano para ocultar/mostrar elementos del manual en la UI base.
+
+## HU-03: Autenticación de usuarios (Login, Logout y Restablecimiento de Contraseña)
+
+Como usuario o alumno que utiliza la aplicación, quiero contar con un flujo completo de autenticación que incluya inicio/cierre de sesión y restablecimiento de contraseña olvidada, para gestionar mi acceso con seguridad y entender cómo funciona el sistema de auth, tokens y gestión de correos en Django.
+
+### Criterios de Aceptacion
+
+1. Debe incluir vistas, formularios y templates para Login (/login/) y Logout (/logout/) con protección CSRF y redirecciones configuradas.
+2. Debe implementar el circuito estándar de restablecimiento de contraseña mediante token (PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView y PasswordResetCompleteView).
+3. Para el entorno de desarrollo local, el envío de emails debe configurarse con el backend de consola (console.EmailBackend), imprimiendo el enlace de reseteo directamente en la terminal para que el alumno pueda probarlo inmediatamente sin requerir credenciales SMTP.
+4. Debe incluir soporte para cambio de contraseña desde la sesión activa (PasswordChangeView).
+5. Las rutas protegidas deben requerir autenticación (@login_required), redirigiendo al login si el usuario es anónimo.
+6. Cada template y vista del circuito debe estar comentado explicando paso a paso la generación del token y el ciclo de vida del reseteo.
+
+### Detalle Tecnico y Reglas de Negocio
+
+Uso de django.contrib.auth.views y sus formularios estándar. Configuración didáctica de EMAIL_BACKEND en settings.py mediante variables de entorno.
