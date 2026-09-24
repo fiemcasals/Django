@@ -82,40 +82,65 @@ INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
 # ------------------------------------------------------------------------------
 # 4. MIDDLEWARE (Capa Intermedia de Procesamiento HTTP)
 # ------------------------------------------------------------------------------
-# Explicación para alumnos:
-# Los 'Middlewares' son una serie de filtros en cadena (patrón "Cebolla" o Pipeline)
-# que se ejecutan en cada petición antes de llegar a la vista, y en cada respuesta
-# antes de enviarse al navegador del usuario.
+# Explicación exhaustiva para alumnos:
 #
-# El orden en esta lista es crucial (se ejecutan de arriba hacia abajo en la petición,
-# y de abajo hacia arriba en la respuesta):
+# ¿Qué es un Middleware?
+# Es una cadena de filtros intermedios (patrón de diseño "Cebolla" o Pipeline).
+# Toda petición HTTP que entra a tu servidor pasa por esta lista de middlewares
+# ANTES de llegar a la vista (views.py). Luego, la respuesta generada por la vista
+# vuelve a pasar por estos mismos middlewares en orden inverso ANTES de enviarse
+# al navegador del usuario.
+#
+# Flujo visual:
+#   Navegador (Petición HTTP entrante)
+#         │
+#         ▼
+#     [ 1. SecurityMiddleware       ] -> Aplica cabeceras de seguridad (SSL, XSS)
+#     [ 2. SessionMiddleware        ] -> Lee/crea cookie de sesión (request.session)
+#     [ 3. CommonMiddleware         ] -> Normaliza URLs (agrega '/' si falta)
+#     [ 4. CsrfViewMiddleware       ] -> Valida token de seguridad {% csrf_token %}
+#     [ 5. AuthenticationMiddleware ] -> Asocia el usuario logueado a 'request.user'
+#     [ 6. MessageMiddleware        ] -> Gestiona alertas flash (messages.success)
+#     [ 7. XFrameOptionsMiddleware  ] -> Bloquea ataques de Clickjacking (iframes)
+#         │
+#         ▼
+#     Vista (views.py) -> Procesa datos y retorna HTML/JSON
+#         │
+#         ▼ (Respuesta HTTP saliente: recorre la lista en orden inverso)
+#   Navegador (Recibe la página)
+#
+# ¡EL ORDEN ES CRUCIAL!
+# Por ejemplo: 'AuthenticationMiddleware' necesita saber qué sesión tiene el usuario,
+# por lo tanto DEBE colocarse obligatoriamente DESPUÉS de 'SessionMiddleware'.
 # ------------------------------------------------------------------------------
 MIDDLEWARE = [
-    # 1. Seguridad básica: Agrega encabezados HTTP de protección (XSS, HSTS, SSL).
+    # 1. Seguridad básica: Agrega encabezados HTTP de protección (X-Content-Type-Options, etc.)
     'django.middleware.security.SecurityMiddleware',
 
-    # 2. Manejo de Sesiones: Lee la cookie de sesión del navegador y crea el objeto
-    #    'request.session', permitiendo recordar datos del usuario entre páginas.
+    # 2. Manejo de Sesiones: Lee la cookie de sesión del navegador y crea el diccionario
+    #    'request.session', permitiendo persistir datos del usuario entre distintas páginas.
     'django.contrib.sessions.middleware.SessionMiddleware',
 
-    # 3. Utilidades comunes: Normaliza URLs (agrega la barra final '/' si falta)
-    #    y maneja el encabezado User-Agent.
+    # 3. Utilidades comunes: Normaliza URLs (redirige automáticamente si falta la barra final '/')
+    #    y gestiona encabezados estándar de navegadores.
     'django.middleware.common.CommonMiddleware',
 
-    # 4. Protección CSRF (Cross-Site Request Forgery): Evita que sitios externos envíen
-    #    formularios maliciosos a nombre de un usuario logueado. Requiere {% csrf_token %} en HTML.
+    # 4. Protección CSRF (Cross-Site Request Forgery): Evita que un sitio web malicioso envíe
+    #    peticiones POST simuladas a nombre de un usuario autenticado. Obliga a que todo
+    #    formulario HTML incluya la etiqueta {% csrf_token %}.
     'django.middleware.csrf.CsrfViewMiddleware',
 
-    # 5. Autenticación: Toma el ID de la sesión y asocia el usuario actual a 'request.user'.
-    #    (Requiere que SessionMiddleware esté antes).
+    # 5. Autenticación de Usuarios: Toma el ID almacenado en la sesión y carga el objeto
+    #    del usuario en 'request.user'. Si no inició sesión, 'request.user.is_authenticated' es False.
+    #    (Requiere que SessionMiddleware esté ubicado antes en esta lista).
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 
-    # 6. Mensajes Flash: Habilita el envío de notificaciones temporales ('messages.success', etc.)
-    #    que se guardan en la sesión y se muestran una sola vez en el HTML.
+    # 6. Mensajes Flash: Permite almacenar notificaciones temporales de un solo uso
+    #    ('messages.success', 'messages.error') que se borran automáticamente al ser mostradas.
     'django.contrib.messages.middleware.MessageMiddleware',
 
     # 7. Protección contra Clickjacking: Evita que tu sitio web sea incrustado dentro
-    #    de un <iframe> invisible en otra página para engañar al usuario.
+    #    de un elemento <iframe> invisible en otra página web para engañar al usuario.
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
