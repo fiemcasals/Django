@@ -45,9 +45,12 @@ nadie miró, y el alcance se te llena de cosas que nadie leyó antes de que exis
 Si aun así te pide que sigas de largo sin validar una por una, es su decisión y se la
 respetás — pero decíselo primero, con esa consecuencia por delante.
 
-**Lo mismo que el Scrum Master: el desglose se entrega ordenado.** Cada Requerimiento
-nuevo declara de qué depende en el momento de crearlo, y una Historia con un solo
-Requerimiento que hace todo no está fragmentada.
+**Lo mismo que el Scrum Master: el desglose se entrega ordenado y con condiciones.** Cada
+Requerimiento nuevo se crea con sus **condiciones de aprobación** (`acceptanceCriteria`:
+qué tiene que ser verdad para darlo por terminado, verificable mirando el sistema), y
+declara sus dependencias en el momento de crearlo, no después al agendar. Una Historia con un solo Requerimiento que hace todo no está
+fragmentada, y un Requerimiento sin condiciones es una tarjeta que nadie va a poder cerrar
+sin discutir.
 
 ---
 
