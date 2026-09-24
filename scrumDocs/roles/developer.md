@@ -1,6 +1,6 @@
 # Developer — qué podés hacer en este proyecto
 
-_Generado automáticamente el 2026-09-24T16:46:14.890Z -- no editar a mano, se sobreescribe en cada publicación._
+_Generado automáticamente el 2026-09-24T19:11:22.760Z -- no editar a mano, se sobreescribe en cada publicación._
 
 Este es el documento de **tu** rol. Lo leés vos (la IA que asiste a un `developer`) y nadie
 más: los otros roles tienen el suyo en `scrumDocs/roles/`. El procedimiento paso a paso
@@ -24,14 +24,51 @@ es lo último que depende de vos.
 
 ## Uno por vez, terminado de verdad
 
-Un Requerimiento a la vez, y el siguiente **recién cuando el anterior está cerrado**: los
-criterios de aceptación que le tocan recorridos uno por uno, las pruebas escritas y en
-verde, la documentación en el repo, el Pull Request abierto y la tarjeta en `pr_open`.
-"Ya lo implementé" no es ninguna de esas cosas.
+Un Requerimiento a la vez, y el siguiente **recién cuando el anterior está cerrado**: sus
+condiciones de aprobación recorridas una por una, las pruebas escritas y en verde, los
+Tests cargados en la app, el documento de entrega en el repo, el Pull Request abierto y la
+tarjeta en `pr_open`. "Ya lo implementé" no es ninguna de esas cosas.
 
-La suite prueba lo que escribiste; los criterios de aceptación dicen lo que **había** que
-escribir. Por eso los dos se miran, y por eso un criterio que te toca y quedó sin cubrir
+## Todo lo que entregás tiene que ser mensurable, testeable y documentado
+
+Son tres cosas distintas y ninguna reemplaza a otra:
+
+- **Mensurable.** Ni en las condiciones, ni en la entrega, ni en `observations` entran los
+  adjetivos: "rápido", "seguro", "robusto" no se pueden probar ni refutar. Van con número y
+  unidad — "el listado pasó de 4,1 s a 380 ms con 10.000 registros" — o no van. Si algo no
+  lo podés medir, decílo tal cual: un límite declarado es información, un adjetivo es ruido
+  que otro va a tener que verificar de nuevo.
+- **Testeable, en las dos etapas.** Cada condición de aprobación deja dos Tests en la app:
+  uno **del programador** (`desarrollo`), que corrés vos en la rama del Requerimiento,
+  aislado y con los datos fijos que haga falta hardcodear; y uno **de QA**
+  (`integracion`), que corre QA sobre `dev` con todo mergeado. Los de desarrollo los dejás
+  **en verde**; los de integración los dejás **preparados** — con pasos, datos y resultado
+  esperado — pero **no los corrés vos**: en tu rama no hay integración que probar, así que
+  un verde ahí es una afirmación sin respaldo. Una condición sin Test es una que sólo vos
+  podés afirmar: una promesa, no una entrega.
+- **Documentado, y con el script.** Un archivo por Requerimiento en
+  `scrumDocs/entregas/<CODIGO>.md`: qué quedó implementado, cómo se levanta y se prueba
+  (comandos copiables), qué datos hacen falta, qué endpoints o pantallas toca, cómo se
+  corre integrado, y **qué quedó afuera o se asumió** — ese último punto es el que evita
+  que QA reporte como defecto una decisión que tomaste a conciencia.
+
+  Y al lado, `scrumDocs/entregas/<CODIGO>.sh`: un ejecutable que recorre el flujo completo
+  **ya integrado**, prepara sus datos y los limpia, y con `--carga N` repite el recorrido
+  midiendo. Es lo que QA no puede escribir por vos: él sabe qué hay que verificar, vos
+  sabés con qué datos.
+
+La vara es una sola: **QA tiene que poder probar tu Requerimiento sin preguntarte nada.**
+Si para validarlo hace falta una conversación con vos, la entrega está incompleta — y esa
+conversación no queda registrada en ningún lado.
+
+La suite prueba lo que escribiste; las **condiciones de aprobación** del Requerimiento dicen
+lo que **había** que escribir. Por eso las dos se miran, y por eso una condición sin cubrir
 significa que el Requerimiento sigue abierto aunque todo esté en verde.
+
+Están en el campo `acceptanceCriteria` de tu Requerimiento: son de esa tarjeta, no de la
+Historia entera, así que no hay nada que adivinar. **No son tuyas para editar** — las
+escriben el PM y el Scrum Master, y la API te contesta 403. Si faltan, o si alguna resultó
+imposible, se habla: proponer una redacción está bien, darla por cumplida no.
 
 Al cerrar uno, **ofrecé el siguiente y esperá**. Que te hayan dicho "hacé todo" autoriza el
 trabajo, no saltea la revisión de cada pieza: entre un Requerimiento y el que sigue hay
