@@ -33,6 +33,9 @@ urlpatterns = [
     # Módulo de Datos y Catálogo (/datos/)
     path('datos/', include('apps.datos.urls', namespace='datos')),
 
+    # Módulo de Inteligencia Artificial y Chat Didáctico (/ia/)
+    path('ia/', include('apps.ia.urls', namespace='ia')),
+
     # Atajos de rutas directas para Login y Logout
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', logout_view, name='logout'),
