@@ -1,6 +1,6 @@
 # Requerimientos -- django
 
-_Generado automaticamente el 2026-09-24T17:52:47.842Z -- no editar a mano, se sobreescribe en cada publicacion._
+_Generado automaticamente el 2026-09-24T17:54:30.637Z -- no editar a mano, se sobreescribe en cada publicacion._
 
 ## HU-01: Arquitectura base modular y entorno Dockerizado con documentación didáctica
 
@@ -61,6 +61,16 @@ _Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scr
 ### RF-02: Interfaz Web CRUD para gestión de datos con validaciones (Funcional)
 
 Implementar formularios (ModelForm) con validaciones y vistas protegidas con @login_required para el ciclo CRUD completo (Listar, Detalle, Crear, Editar, Eliminar) del modelo Item/Recurso. Renderizar plantillas HTML claras con mensajes de feedback. Entregables: apps/datos/ (forms.py, views.py, urls.py), templates/datos/ (lista.html, detalle.html, form.html, confirmar_eliminar.html), apps/datos/tests/test_views.py. Suite de tests obligatoria: listar responde 200, crear form válido persiste, crear form inválido muestra errores, editar actualiza y eliminar borra. Aprobación: python manage.py test apps.datos.tests.test_views OK (5 tests pasados).
+
+**Condiciones de aprobación**
+
+_Sin condiciones de aprobación cargadas: pedíselas al Project Manager o al Scrum Master antes de darlo por terminado._
+
+## HU-05: Consulta inteligente a base de datos asistida por IA (Anthropic API con optimización estricta de tokens)
+
+### RF-01: Servicio de IA con Anthropic SDK, Tool Calling en dos pasos y optimización de tokens (Funcional)
+
+Implementar en apps/ia/services.py la integración con Claude (anthropic SDK) leyendo ANTHROPIC_API_KEY desde .env. Implementar flujo en 2 pasos: Fase 1 para selección de tool de consulta liviano y Fase 2 para ejecución local en PostgreSQL y reenvío de datos a Claude para síntesis final. Manejar errores de conexión y cuotas. Entregables: apps/ia/ (apps.py, services.py), apps/ia/tests/test_ai_service.py. Suite de tests obligatoria (con mocks): esquema tools mínimo, selección de herramienta Fase 1, síntesis Fase 2 y captura de errores sin error 500. Aprobación: python manage.py test apps.ia.tests.test_ai_service OK (4 tests pasados).
 
 **Condiciones de aprobación**
 
