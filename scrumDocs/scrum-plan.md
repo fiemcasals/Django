@@ -1,10 +1,10 @@
-# Plan de Requerimientos — django
+# Plan de Tareas — django
 
-_Generado automáticamente el 2026-10-09T14:43:17.607Z — no editar a mano, se sobreescribe en cada publicación._
+_Generado automáticamente el 2026-10-09T16:56:22.930Z — no editar a mano, se sobreescribe en cada publicación._
 
-Orden sugerido de desarrollo (respeta dependencias entre Requerimientos). Cada fila indica de qué Requerimientos depende, si tiene.
+Orden sugerido de desarrollo (respeta dependencias entre Tareas). Cada fila indica de qué Tareas depende, si tiene.
 
-| Orden | Código | Requerimiento | Historia de Usuario | Módulo | Entrega | Estado | Desarrollador | Depende de | Rechazos |
+| Orden | Código | Tarea | Historia de Usuario | Módulo | Sprint | Estado | Desarrollador | Depende de | Rechazos |
 |---|---|---|---|---|---|---|---|---|---|
 | 1 | RF-01 | Configuración central y estructura modular de aplicaciones Django | HU-01 | — | — | Hecho | dev-django | — | — |
 | 2 | RNF-01 | Contenerización del entorno con Docker, docker-compose y PostgreSQL | HU-01 | — | — | Hecho | dev-django | RF-01 | — |
